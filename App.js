@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,Button, PermissionsAndroid,Permission } from 'react-native';
+import { StyleSheet, Text, View,Image,Button, PermissionsAndroid,Permission } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -25,11 +25,18 @@ export default function App() {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        alert('The request was denied');
+      }else{
+        try{
+          let location = await Location.getCurrentPositionAsync({});
+          console.log(location)
+          // do something with location
+        }catch(e){
+          alert('We could not find your position. Please make sure your location service provider is on');
+          console.log('Error while trying to get location: ', e);
+        }
       }
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      console.log(location)
+     
     })();
   });
 
@@ -39,7 +46,12 @@ export default function App() {
   <Stack.Navigator>
     <Stack.Screen name="App Name" component={HomeScreen}
       options={{
-          headerTitle: "App",
+          headerTitle: ()=>(
+            <Image  style={{ width: 200, height: 50 }}   resizeMode='contain'
+            source={{ uri: 'https://offsetnow.com/assets/Offset_Logo_2.png' }}
+          />
+          ),
+
           headerRight: () => (
             <View style={{paddingRight:16}}>
               <Icon name='three-bars' size={40} color='#000' onPress={()=> navigation.openDrawer()}/>
@@ -54,10 +66,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="App">
-        <Drawer.Screen name="Home" children={createMainStack}/>
-        <Drawer.Screen name="Screen One" component={ScreenOne}/>
-        <Drawer.Screen name="Screen Two" component={ScreenTwo}/>
-        <Drawer.Screen name="Screen Three" component={ScreenThree}/>
+        <Drawer.Screen name="BROWSE PLEDGE" children={createMainStack}/>
+        <Drawer.Screen name="Start A Pledge" component={ScreenOne}/>
+        <Drawer.Screen name="How It Works" component={ScreenTwo}/>
+        <Drawer.Screen name="Contact" component={ScreenThree}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );
