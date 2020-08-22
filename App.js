@@ -21,21 +21,19 @@ export default function App() {
   //const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS)
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-      }
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      console.log(location)
-    })();
-  });
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       setErrorMsg('Permission to access location was denied');
+  //     }
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     setLocation(location);
+  //     console.log(location)
+  //   })();
+  // });
 
-  
   const createMainStack = ({navigation}) => 
-  
   <Stack.Navigator>
     <Stack.Screen name="App Name" component={HomeScreen}
       options={{

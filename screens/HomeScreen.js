@@ -1,13 +1,27 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import CarouselItem from '../components/carousel/carousel_item'
-
+import React ,{useState}from 'react';
+import { StyleSheet, Text, View, Button, Dimensions } from 'react-native';
+// import CarouselItem from '../components/carousel/carousel_item'
+import { SliderBox } from "react-native-image-slider-box";
+const { width, height } = Dimensions.get('window')
+console.log(width,height)
 export default function HomeScreen({ navigation }) {
+  ImageList = ["https://offsetnow.com/assets/images/banner1.jpg","https://offsetnow.com/assets/images/baneer2.jpg","https://offsetnow.com/assets/Baners/baner3.jpg"]
+  console.warn(ImageList)
   return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+          <View style={styles.carouselcontainter}>
+            <SliderBox
+            sliderBoxHeight={height/3}
+            circleLoop
+            autoplay={true}
+            resizeMethod={'resize'}
+            resizeMode={'cover'}
+            images={ImageList} />
+          </View>
+          <View style={{height:height/3}}><Text>Lorem</Text></View>
           {/* <CarouselItem item={{url:"https://picsum.photos/200/300",title:"Just OK",description:"Hello"}}/> */}
-          <Button title="Go To" onPress={()=>{navigation.navigate('Options')}}></Button>
+          <Button title="Open Options" onPress={()=>{navigation.navigate('Options')}}></Button>
+          <View style={{height:height/3}}></View>
       </View>
   );
 }
@@ -19,4 +33,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  carouselcontainter:{
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cards:{
+    
+  }
 });
