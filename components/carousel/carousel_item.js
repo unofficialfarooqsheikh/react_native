@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     },
 
     textView: {
-        position: 'absolute',
+        position: "relative",
         bottom: 20,
         margin: 10,
         left: 5,
