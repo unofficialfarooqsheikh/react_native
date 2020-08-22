@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View,Button, PermissionsAndroid,Permission } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -9,12 +9,31 @@ import ScreenOne from './screens/drawer/ScreenOne';
 import ScreenTwo from './screens/drawer/ScreenTwo';
 import ScreenThree from './screens/drawer/ScreenThree';
 import Icon from 'react-native-vector-icons/Octicons';
+import Constants from 'expo-constants';
+import * as Location from 'expo-location';
+
 
 const Stack= createStackNavigator();
 const Drawer= createDrawerNavigator();
 
-export default function App() {
 
+export default function App() {
+  //const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS)
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log(location)
+    })();
+  });
+
+  
   const createMainStack = ({navigation}) => 
   
   <Stack.Navigator>
@@ -28,6 +47,7 @@ export default function App() {
           ),
         }}
     />
+  
     <Stack.Screen name="Options" component={OptionsScreen}/>
   </Stack.Navigator>
 
