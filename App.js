@@ -23,13 +23,18 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState(null);
   useEffect(() => {
     (async () => {
+
       let { status } = await Location.requestPermissionsAsync();
+      
       if (status !== 'granted') {
         alert('The request was denied');
       }else{
         try{
+          alert(status)
           let location = await Location.getCurrentPositionAsync({});
+          //alert("location permission Granted")
           console.log(location)
+          
           // do something with location
         }catch(e){
           alert('We could not find your position. Please make sure your location service provider is on');
@@ -40,9 +45,7 @@ export default function App() {
     })();
   });
 
-  
   const createMainStack = ({navigation}) => 
-  
   <Stack.Navigator>
     <Stack.Screen name="App Name" component={HomeScreen}
       options={{
