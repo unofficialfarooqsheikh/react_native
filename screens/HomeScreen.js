@@ -6,7 +6,7 @@ import { SliderBox } from "react-native-image-slider-box";
 const { width, height } = Dimensions.get('window')
 console.log(width,height)
 export default function HomeScreen({ navigation }) {
-  ImageList = ["https://offsetnow.com/assets/images/banner1.jpg","https://offsetnow.com/assets/images/baneer2.jpg","https://offsetnow.com/assets/Baners/baner3.jpg"]
+  var ImageList = ["https://offsetnow.com/assets/images/banner1.jpg","https://offsetnow.com/assets/images/baneer2.jpg","https://offsetnow.com/assets/Baners/baner3.jpg"]
   console.warn(ImageList)
   return (
     <SafeAreaView>
