@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,Image,Button, PermissionsAndroid,Permission } from 'react-native';
+import { StyleSheet, Text, View,Image,Button, PermissionsAndroid,Permission , SafeAreaView, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -67,6 +67,7 @@ export default function App() {
   </Stack.Navigator>
 
   return (
+
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="App">
         <Drawer.Screen name="BROWSE PLEDGE" children={createMainStack}/>
@@ -75,5 +76,6 @@ export default function App() {
         <Drawer.Screen name="Contact" component={ScreenThree}/>
       </Drawer.Navigator>
     </NavigationContainer>
+    
   );
 }
