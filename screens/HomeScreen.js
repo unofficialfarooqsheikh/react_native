@@ -1,4 +1,5 @@
 import React ,{useState}from 'react';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, Button, Dimensions } from 'react-native';
 // import CarouselItem from '../components/carousel/carousel_item'
 import { SliderBox } from "react-native-image-slider-box";
@@ -8,6 +9,8 @@ export default function HomeScreen({ navigation }) {
   ImageList = ["https://offsetnow.com/assets/images/banner1.jpg","https://offsetnow.com/assets/images/baneer2.jpg","https://offsetnow.com/assets/Baners/baner3.jpg"]
   console.warn(ImageList)
   return (
+    <SafeAreaView>
+      
       <View style={styles.container}>
           <View style={styles.carouselcontainter}>
             <SliderBox
@@ -23,6 +26,7 @@ export default function HomeScreen({ navigation }) {
           <Button title="Open Options" onPress={()=>{navigation.navigate('Options')}}></Button>
           <View style={{height:height/3}}></View>
       </View>
+    </SafeAreaView>
   );
 }
 
