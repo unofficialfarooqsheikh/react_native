@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View,Image,Button, PermissionsAndroid,Permission , SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View,Image,Button, Dimensions, PermissionsAndroid,Permission , SafeAreaView, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -15,7 +15,7 @@ import * as Location from 'expo-location';
 
 const Stack= createStackNavigator();
 const Drawer= createDrawerNavigator();
-
+const { width, height } = Dimensions.get('window')
 
 export default function App() {
   //const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS)
@@ -23,9 +23,7 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState(null);
   useEffect(() => {
     (async () => {
-
       let { status } = await Location.requestPermissionsAsync();
-      
       if (status !== 'granted') {
         alert('The request was denied');
       }else{
@@ -33,8 +31,7 @@ export default function App() {
           alert(status)
           let location = await Location.getCurrentPositionAsync({});
           //alert("location permission Granted")
-          console.log(location)
-          
+          // console.log(location)
           // do something with location
         }catch(e){
           alert('We could not find your position. Please make sure your location service provider is on');
@@ -44,25 +41,26 @@ export default function App() {
      
     })();
   });
-
   const createMainStack = ({navigation}) => 
-  <Stack.Navigator>
+  <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: 'purple' } }}>
     <Stack.Screen name="App Name" component={HomeScreen}
       options={{
-          headerTitle: ()=>(
-            <Image  style={{ width: 200, height: 50 }}   resizeMode='contain'
-            source={{ uri: 'https://offsetnow.com/assets/Offset_Logo_2.png' }}
-          />
+          headerTitle: "",
+          headerRight: ()=>(
+            <View style={{flex:1,justifyContent:"center"}}>
+              <Image  style={{ width: 200, height: 50 }}   resizeMode='contain'
+              source={{ uri: 'https://offsetnow.com/assets/Offset_Logo_2.png' }}
+            />
+            </View>
           ),
 
-          headerRight: () => (
-            <View style={{paddingRight:16}}>
+          headerLeft: () => (
+            <View style={{paddingLeft:12}}>
               <Icon name='three-bars' size={40} color='#000' onPress={()=> navigation.openDrawer()}/>
             </View>
           ),
         }}
     />
-  
     <Stack.Screen name="Options" component={OptionsScreen}/>
   </Stack.Navigator>
 
@@ -71,7 +69,7 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="App">
         <Drawer.Screen name="BROWSE PLEDGE" children={createMainStack}/>
-        <Drawer.Screen name="Start A Pledge" component={ScreenOne}/>
+        <Drawer.Screen name="Start A Pledge" component={ScreenOne} />
         <Drawer.Screen name="How It Works" component={ScreenTwo}/>
         <Drawer.Screen name="Contact" component={ScreenThree}/>
       </Drawer.Navigator>
