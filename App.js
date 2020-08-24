@@ -9,6 +9,7 @@ import ScreenOne from './screens/drawer/ScreenOne';
 import ScreenTwo from './screens/drawer/ScreenTwo';
 import ScreenThree from './screens/drawer/ScreenThree';
 import Icon from 'react-native-vector-icons/Octicons';
+import Colours from './constants/colours';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 
@@ -38,16 +39,14 @@ export default function App() {
           console.log('Error while trying to get location: ', e);
         }
       }
-     
     })();
   });
   const createMainStack = ({navigation}) => 
   <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: 'purple' } }}>
     <Stack.Screen name="App Name" component={HomeScreen}
       options={{
-          headerTitle: "",
-          headerRight: ()=>(
-            <View style={{flex:1,justifyContent:"center"}}>
+          headerTitle: ()=>(
+            <View style={{alignSelf:"center"}}>
               <Image  style={{ width: 200, height: 50 }}   resizeMode='contain'
               source={{ uri: 'https://offsetnow.com/assets/Offset_Logo_2.png' }}
             />
@@ -55,8 +54,8 @@ export default function App() {
           ),
 
           headerLeft: () => (
-            <View style={{paddingLeft:12}}>
-              <Icon name='three-bars' size={40} color='#000' onPress={()=> navigation.openDrawer()}/>
+            <View style={{paddingLeft:12, backgroundColor: Colours.primary}}>
+              <Icon name='three-bars' size={40} color='#fff' onPress={()=> navigation.openDrawer()}/>
             </View>
           ),
         }}
