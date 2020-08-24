@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Image, Dimensions, Button, ProgressBarAndroid }
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { Slider } from 'react-native-elements';
 const { width, height } = Dimensions.get('window')
+import Colours from '../../../constants/colours'
 
 
 const Card = ({ data }) => {
@@ -16,16 +17,16 @@ const Card = ({ data }) => {
                                 <Text style={styles.itemTitle}> {data.Title}</Text>
                         </View>
                         <View style={styles.buttonContainer}>
-                                <Button style={styles.button} title= {data.ButtonName}></Button>
+                                <Button style={styles.button} color={Colours.secondary} title= {data.ButtonName}></Button>
                         </View>
-                        <Slider value={data.Progress} disabled/>
-                        <Text style={styles.itemDescription}>{data.Crontent}</Text>
+                        <Text style={styles.itemDescription}>{data.Content}</Text>
+                        <Slider value={data.Progress} thumbTintColor={Colours.secondary} disabled={1}/>
                         <View style={styles.titleContainer}>
                                <View styles={styles.valuesContainer}>
                                 <Text style={styles.itemTitle}>{data.Heading1}</Text>
                                 <Text style={styles.itemValue}>{data.Value1}</Text>
                                </View>
-                               <View ><Text style={{fontSize:50}}> | </Text></View>
+                               <View ><Text style={{fontSize:70}}> | </Text></View>
                                <View styles={styles.valuesContainer}>
                                 <Text style={styles.itemTitle}>{data.Heading2}</Text>
                                 <Text style={styles.itemValue}>{data.Value2}</Text>
@@ -55,10 +56,11 @@ const styles = StyleSheet.create({
         flex:1,
         width: '100%',
         height:'100%',
+        borderRadius: 10,
         position: "absolute",
         padding: 20,
-        backgroundColor: "rgba(35, 168, 132, 0.9)",
-        opacity: 0.8
+        backgroundColor: Colours.primary,
+        opacity: 0.9
     },
     titleContainer:{
             flexDirection:"row",
@@ -98,19 +100,19 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 20,
-        backgroundColor:"black"
+        backgroundColor:Colours.secondary
     },
     buttonContainer:{
         alignItems:"center",
-        "padding": "20",
-        backgroundColor:"red",
+        "padding": 20,
         width: "100%",
     },
     valuesContainer:{
         flexDirection:"row"
     },
     itemValue:{
-        fontSize:25
+        fontSize:25,
+        fontWeight:"bold"
     }
 })
 

@@ -1,4 +1,4 @@
 export default {
-    primary: "rgba(35, 168, 132, 0.9)",
-    secondary:""
+    primary: "#21a984",
+    secondary:"#123a54"
 }
