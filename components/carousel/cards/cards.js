@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text, Image, Dimensions, Button, ProgressBarAndroid } from 'react-native';
+import { View, StyleSheet, Text, ImColoursage, Dimensions, Button, ProgressBarAndroid ,Image} from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { Slider } from 'react-native-elements';
 const { width, height } = Dimensions.get('window')
@@ -13,7 +13,9 @@ const Card = ({ data }) => {
             <View style={styles.ContentView}>
                     <View style={styles.textView}>
                         <View style={styles.titleContainer}>
-                                <View style={{paddingTop:8}}><FontAwesome5 name={data.Icon} size={24} color="black" /></View>
+                                <View style={{paddingTop:8}}>
+                                    <FontAwesome5 name={data.Icon} size={24} color="black" />
+                                </View>
                                 <Text style={styles.itemTitle}> {data.Title}</Text>
                         </View>
                         <View style={styles.buttonContainer}>
