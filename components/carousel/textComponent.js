@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet, Text, Image, Dimensions } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { Slider } from 'react-native-elements';
-import Colours from '../../constants/colours'
+import Colours from '../../constants/colors'
 
 
 

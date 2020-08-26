@@ -12,32 +12,6 @@ const { width, height } = Dimensions.get('window')
 const Card = ({ data }) => {
     return (
         <View style={styles.cardView}>
-            <Image style={styles.image} source={{ uri: data.ImageUrl }} />
-            <View style={styles.ContentView}>
-                    <View style={styles.textView}>
-                        <View style={styles.titleContainer}>
-                                <View style={{paddingRight:10}}>
-                                    <FontAwesome5 name={data.Icon} size={30} color="black" />
-                                </View>
-                                <Text style={styles.itemTitle}> {data.Title}</Text>
-                        </View>
-                        <View style={styles.buttonContainer}>
-                                <MainButton >{data.ButtonName}</MainButton>
-                        </View>
-                        <Slider value={data.Progress} thumbTintColor={Colours.secondary} disabled={true}/>
-                        <View style={styles.titleContainer}>
-                               <View styles={styles.valuesContainer}>
-                                <Text style={styles.itemTitle}>{data.Heading1}</Text>
-                                <Text style={styles.itemValue}>{data.Value1}</Text>
-                               </View>
-                               <View ><Text style={styles.divider}> | </Text></View>
-                               <View styles={styles.valuesContainer}>
-                                <Text style={styles.itemTitle}>{data.Heading2}</Text>
-                                <Text style={styles.itemValue}>{data.Value2}</Text>
-                               </View>
-                        </View>
-                    </View>
-            </View>
         </View>
     )
 }

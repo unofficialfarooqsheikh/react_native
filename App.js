@@ -9,19 +9,24 @@ import ScreenOne from './screens/drawer/ScreenOne';
 import ScreenTwo from './screens/drawer/ScreenTwo';
 import ScreenThree from './screens/drawer/ScreenThree';
 import Icon from 'react-native-vector-icons/Octicons';
-import Colours from './constants/colours';
+import Colors from './constants/colors';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 
-
+// stack navigator initialized
 const Stack= createStackNavigator();
-const Drawer= createDrawerNavigator();
+// drawer navigator initialized
+const Drawer= createDrawerNavigator()
+// getting the dimensions of the screen
 const { width, height } = Dimensions.get('window')
 
 export default function App() {
   //const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS)
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  // just to get idea of the height and width of the device 
+  console.warn(height,width)
+  // function to get the loaction
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -41,10 +46,12 @@ export default function App() {
       }
     })();
   });
+  // creating the main stack and all the Header is designed here
   const createMainStack = ({navigation}) => 
   <Stack.Navigator 
   // screenOptions={{ headerStyle: { backgroundColor: Colours.primary } }}
   >
+  {/* this is for the home screen and options is used here for designing the header bar */}
     <Stack.Screen name="App Name" component={HomeScreen}
       options={{
           headerTitle: ()=>(
@@ -62,6 +69,7 @@ export default function App() {
           ),
         }}
     />
+    {/* another screen */}
     <Stack.Screen name="Options" component={OptionsScreen}/>
   </Stack.Navigator>
 
