@@ -103,8 +103,8 @@ export default function HomeScreen({ navigation }) {
 
 const slideCardDataList=[{
   Progress: "0.5",
-  Raised: "€5",
-  Goals: "€10",
+  Raised: "€182222222",
+  Goals: "€100858888",
   Icon: "calendar-alt",
   Content1: "Unlock2 Curfew Ends",
   CalenderContent: "2 days remaining",

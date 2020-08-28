@@ -24,12 +24,15 @@ const FeatureCards = ({data}) =>{
 
             </View>
 
-
+            
             <View style={styles.container}>
                 <View style={{
                     flexDirection: 'column',
                     flex: 1,
                 }}>
+                    <View>
+                         <Text  style={styles.FeatureTextSpan}>Featured</Text>
+                    </View>
                     <View style={{ marginTop: 20 }}>
                         <Text style={styles.ContentDiv}>
                             {data.Content1}
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
        
-        paddingTop: 40,
+       
         backgroundColor: '#ecf0f1',
         margin:15
       },
@@ -152,6 +155,13 @@ imageCover:{
   TextView:{
     marginTop:'10%'
   },
+  FeatureTextSpan:{
+    backgroundColor:'#23a884' ,flex:1,
+    width:width/4,
+    fontSize:25,
+    color:'#fff',
+    textAlign:'center'
+  }
 })
 
 export default FeatureCards
