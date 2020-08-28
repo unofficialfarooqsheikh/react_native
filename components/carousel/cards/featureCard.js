@@ -157,7 +157,7 @@ imageCover:{
   },
   FeatureTextSpan:{
     backgroundColor:'#23a884' ,flex:1,
-    width:width/4,
+    width: wp("30%"),
     fontSize:25,
     color:'#fff',
     textAlign:'center'
