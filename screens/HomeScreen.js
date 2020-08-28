@@ -6,7 +6,7 @@ import {
   Button,
   Dimensions,
   ScrollView,
-  Image,
+  Image,ImageBackground
 } from "react-native";
 // import CarouselItem from '../components/carousel/carousel_item'
 import { SliderBox } from "react-native-image-slider-box";
@@ -15,7 +15,8 @@ import TextComponent from "../components/carousel/textComponent";
 import colors from "../constants/colors";
 import { Slider, Tooltip } from "react-native-elements";
 import SliderCards from "../components/carousel/cards/donate_cards";
-
+import ParallaxCircle from "../components/parallaxCircle/ParallaxCircle";
+import FeatureCards from "../components/carousel/cards/featureCard";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -80,7 +81,38 @@ export default function HomeScreen({ navigation }) {
         "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
     },
   ];
+  const image = { uri: "https://offsetnow.com/fun-fact-bg.jpg" };
+  const CircleData = [
+    {
+    circleNumber:"35",
+    ContentText:"Pledges"
+  },
+  {
+    circleNumber:"21",
+    ContentText:"Active Pledges"
+  },
+  {
+    circleNumber:"5",
+    ContentText:"Countries"
+  },
+  {
+    circleNumber:"33",
+    ContentText:"Donations"
+  }
+]
 
+const slideCardDataList=[{
+  Progress: "0.5",
+  Raised: "€5",
+  Goals: "€10",
+  Icon: "calendar-alt",
+  Content1: "Unlock2 Curfew Ends",
+  CalenderContent: "2 days remaining",
+  causestitle1: "Test",
+  sliderstitle1: "Donation",
+  ImageUrl:
+    "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
+},]
   const FundRaiseSlider = [{ Progress: "0.8" }];
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -105,7 +137,6 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.TextView}>
         <Text style={styles.TextSectionHeader}>Top causes</Text>
         <Text style={styles.TextSectionHDesc}>
-          {" "}
           View the Pledges that are most active right now.
         </Text>
       </View>
@@ -113,6 +144,22 @@ export default function HomeScreen({ navigation }) {
         {SliderCardsDataList.map((item, index) => {
           return <SliderCards key={index} data={item} />;
         })}
+      </View>
+      <View>
+      <ImageBackground source={image} style={styles.image}>
+        {
+          CircleData.map((item,index)=>{
+           return  <ParallaxCircle key={index} data={item} />
+      })
+        }
+          </ImageBackground>
+      </View>
+      <View>
+        { 
+        slideCardDataList.map((item,index)=>{
+            return <FeatureCards key={index} data={item}/>
+          })  
+        }
       </View>
     </ScrollView>
   );
@@ -146,5 +193,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     marginTop: "5%",
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
   },
 });
