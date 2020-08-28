@@ -12,7 +12,7 @@ const MainButton = props => {
           <View style={styles.button}>
             <Text style={styles.buttonText}>{props.children}</Text>
           </View>
-            <Text style={styles.sidearrow}>></Text>
+            <Text style={styles.sidearrow}></Text>
       </View>
     </TouchableOpacity>
   );
