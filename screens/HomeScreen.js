@@ -145,7 +145,7 @@ const slideCardDataList=[{
           return <SliderCards key={index} data={item} />;
         })}
       </View>
-      <View>
+      {/* <View>
       <ImageBackground source={image} style={styles.image}>
         {
           CircleData.map((item,index)=>{
@@ -153,7 +153,7 @@ const slideCardDataList=[{
       })
         }
           </ImageBackground>
-      </View>
+      </View> */}
       <View>
         { 
         slideCardDataList.map((item,index)=>{
