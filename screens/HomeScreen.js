@@ -6,6 +6,7 @@ import CardsComponent from '../components/carousel/cards/cards'
 import TextComponent from  '../components/carousel/textComponent';
 import colors from '../constants/colors';
 import { Slider,Tooltip } from 'react-native-elements';
+import  SliderCards from '../components/carousel/cards/donate_cards';
 
 import {heightPercentageToDP as hp,
   widthPercentageToDP as wp} from 'react-native-responsive-screen';
@@ -18,6 +19,15 @@ export default function HomeScreen({ navigation }) {
                   {Title:"Fund",Icon: "money-bill-alt",Progress: "0.2",ImageUrl: "https://offsetnow.com/Valrnteer1.jpg", Content : "", ButtonName: "Join Us",Heading1:"Reached",Value1:"500",Heading2:"Goal",Value2:"3,000"},
                   {Title:"Donors",Icon: "hand-holding-heart",Progress: "0.8",ImageUrl: "https://offsetnow.com/money1.jpg", Content : "", ButtonName: "Join Us",Heading1:"Reached",Value1:"1000",Heading2:"Goal",Value2:"1,200"}
                   ]
+  const SliderCardsDataList=[
+    {
+      Progress:"0.5" , Raised:'€5',Goals : '€10' ,Icon:'calendar-alt' ,Content1:'Unlock2 Curfew Ends' 
+      ,CalenderContent:'2 days remaining',  causestitle1:'Test',ImageUrl:'https://feapi.offsetnow.com/CampaignImages/f48db8f2-da59-4754-8c21-d0cef320536d.jpg'  },
+      {
+        Progress:"0.2" , Raised:'€128',Goals : '€1282.08' ,Icon:'calendar-alt' ,Content1:'Unlock3 Curfew Ends' 
+        ,CalenderContent:'2 days remaining',  causestitle1:'Unlock3: Curfew Ends, No Schools Till End-August, Gyms Can Reopen Plese donate',
+        ImageUrl:'https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg'  },
+  ]
                
   const FundRaiseSlider=[{Progress:"0.8"}]
  return (
@@ -46,14 +56,26 @@ export default function HomeScreen({ navigation }) {
         <Text style = {styles.TextSectionHDesc}> View the Pledges that are most active right now.</Text>
          
       </View>
-      {/* Image Only  with water */}
-      <View style={styles.TextView}>
+    
+      
+      <View>
+        {
+          SliderCardsDataList.map((item,index ) =>{
+         return <SliderCards key={index}   data={item}/>
+        })
+      }
+      </View>
+      {/* <View style={styles.TextView}>
       <Image  
-      source={{ uri: 'https://feapi.offsetnow.com/CampaignImages/f48db8f2-da59-4754-8c21-d0cef320536d.jpg' }}
+      source={{ uri: 'https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg' }}
       style={styles.imageCover}
           
           />
+         
       </View>
+      <View>
+      <SliderCards  data={SliderCardsDataList[1]}/>
+      </View> */}
 
       {/* Slider ForGoals Raised */}
      
@@ -79,9 +101,7 @@ const styles = StyleSheet.create({
   cards:{
     
   },
-  TextView:{
-    marginTop:'10%'
-  },
+  
   TextSectionHeader:{
     alignItems: 'center',
     justifyContent: 'center',
@@ -98,8 +118,5 @@ const styles = StyleSheet.create({
     marginTop:'5%'
    
   },
-  imageCover:{
-    width: '100%',
-    height: height/1,
-  }
+
 });
