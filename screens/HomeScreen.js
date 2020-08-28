@@ -6,7 +6,8 @@ import {
   Button,
   Dimensions,
   ScrollView,
-  Image,ImageBackground
+  Image,
+  ImageBackground,
 } from "react-native";
 // import CarouselItem from '../components/carousel/carousel_item'
 import { SliderBox } from "react-native-image-slider-box";
@@ -15,7 +16,6 @@ import TextComponent from "../components/carousel/textComponent";
 import colors from "../constants/colors";
 import { Slider, Tooltip } from "react-native-elements";
 import SliderCards from "../components/carousel/cards/donate_cards";
-import ParallaxCircle from "../components/parallaxCircle/ParallaxCircle";
 import FeatureCards from "../components/carousel/cards/featureCard";
 import {
   heightPercentageToDP as hp,
@@ -84,38 +84,40 @@ export default function HomeScreen({ navigation }) {
   const image = { uri: "https://offsetnow.com/fun-fact-bg.jpg" };
   const CircleData = [
     {
-    circleNumber:"35",
-    ContentText:"Pledges"
-  },
-  {
-    circleNumber:"21",
-    ContentText:"Active Pledges"
-  },
-  {
-    circleNumber:"5",
-    ContentText:"Countries"
-  },
-  {
-    circleNumber:"33",
-    ContentText:"Donations"
-  }
-]
+      circleNumber: "35",
+      ContentText: "Pledges",
+    },
+    {
+      circleNumber: "21",
+      ContentText: "Active Pledges",
+    },
+    {
+      circleNumber: "5",
+      ContentText: "Countries",
+    },
+    {
+      circleNumber: "33",
+      ContentText: "Donations",
+    },
+  ];
 
-const slideCardDataList=[{
-  Progress: "0.5",
-  Raised: "€182222222",
-  Goals: "€100858888",
-  Icon: "calendar-alt",
-  Content1: "Unlock2 Curfew Ends",
-  CalenderContent: "2 days remaining",
-  causestitle1: "Test",
-  sliderstitle1: "Donation",
-  ImageUrl:
-    "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
-},]
+  const slideCardDataList = [
+    {
+      Progress: "0.5",
+      Raised: "€182222222",
+      Goals: "€100858888",
+      Icon: "calendar-alt",
+      Content1: "Unlock2 Curfew Ends",
+      CalenderContent: "2 days remaining",
+      causestitle1: "Test",
+      sliderstitle1: "Donation",
+      ImageUrl:
+        "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
+    },
+  ];
   const FundRaiseSlider = [{ Progress: "0.8" }];
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 , backgroundColor:"#DCDCDC"}}>
       {/* Temporary slider box which would be replaced by customer slider box */}
       <SliderBox
         sliderBoxHeight={height / 3}
@@ -155,11 +157,9 @@ const slideCardDataList=[{
           </ImageBackground>
       </View> */}
       <View>
-        { 
-        slideCardDataList.map((item,index)=>{
-            return <FeatureCards key={index} data={item}/>
-          })  
-        }
+        {slideCardDataList.map((item, index) => {
+          return <FeatureCards key={index} data={item} />;
+        })}
       </View>
     </ScrollView>
   );
@@ -197,6 +197,6 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 });

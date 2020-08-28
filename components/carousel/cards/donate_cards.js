@@ -45,7 +45,7 @@ const SliderCards = ({ data }) => {
                         </View>
                         <View style={{ flex: 1 }}>
                             <Text style={{ textAlign: 'right' }} style={styles.GoalsText}> Goals :
-    <Text style={styles.Currency}>:{data.Goals}</Text></Text>
+    <Text style={styles.Currency}>{data.Goals}</Text></Text>
                         </View>
                     </View>
                     <View style={{ marginTop: 20 }}>
@@ -73,7 +73,6 @@ const SliderCards = ({ data }) => {
                     />
                 </View>
             </View>
-
         </View>
     )
 
@@ -84,19 +83,15 @@ const SliderCards = ({ data }) => {
 const styles = StyleSheet.create({
     SliderCards: {
         width: width / 1
-
     },
     container: {
         flex: 1,
-
         paddingTop:  height * 0.01,
         backgroundColor: '#ecf0f1',
         margin: 15
     },
     CardSlidersSlider:{
         flex: 1,
-
-        paddingTop: 10,
         backgroundColor: '#ecf0f1',
         margin: 15
     },
@@ -158,7 +153,6 @@ const styles = StyleSheet.create({
         height: height / 2,
     },
     TextView: {
-        marginTop: '10%'
     },
 })
 

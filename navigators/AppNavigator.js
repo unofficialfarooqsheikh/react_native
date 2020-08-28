@@ -24,7 +24,7 @@ import ScreenOne from "../screens/drawer/ScreenOne";
 import ScreenTwo from "../screens/drawer/ScreenTwo";
 import ScreenThree from "../screens/drawer/ScreenThree";
 import Icon from "react-native-vector-icons/Octicons";
-import { Entypo } from '@expo/vector-icons'; 
+import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 import Constants from "expo-constants";
@@ -106,16 +106,16 @@ export default function AppNavigator() {
 
   // const createBottomTab = ({ navigation }) => {
   //   return (
-      
+
   //   );
   // };
 
   return (
     <NavigationContainer>
-    <BottomTab.Navigator
+      <BottomTab.Navigator
         screenOptions={(route) => ({
           tabBarIcon: (props) => {
-            console.log(route.route)
+            console.log(route.route);
             let iconName;
             if (Platform.OS == "android") {
               if (route.route.name == "Home") {
@@ -124,7 +124,9 @@ export default function AppNavigator() {
               if (route.route.name == "Login") {
                 iconName = "login";
               }
-              return <Entypo name={iconName} size={props.size} color={props.color} />
+              return (
+                <Entypo name={iconName} size={props.size} color={props.color} />
+              );
             }
             if (Platform.OS == "ios") {
               if (route.route.name == "Home") {
@@ -133,12 +135,18 @@ export default function AppNavigator() {
               if (route.route.name == "Login") {
                 iconName = "ios-log-in";
               }
-              return (<Ionicons name={iconName} size={props.size} color={props.color} />)
+              return (
+                <Ionicons
+                  name={iconName}
+                  size={props.size}
+                  color={props.color}
+                />
+              );
             }
-          }
+          },
           // {
           //   console.log(color.color,"Green",color.size)
-          })}
+        })}
       >
         <BottomTab.Screen
           name="Home"

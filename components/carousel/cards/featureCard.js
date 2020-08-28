@@ -19,9 +19,7 @@ const FeatureCards = ({data}) =>{
                 <Image
                     source={{ uri: data.ImageUrl }}
                     style={styles.imageCover}
-
                 />
-
             </View>
 
             
@@ -63,15 +61,10 @@ const FeatureCards = ({data}) =>{
     <Text style={styles.Currency}>{data.Goals}</Text></Text>
                         </View>
                     </View>
-
-
-
                 </View>
                 <View style={styles.donateBtn} >
                     <Button
-
                         title="Donate"
-
                     />
                 </View>
             </View>
@@ -88,23 +81,19 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-       
-       
+        padding:15,
         backgroundColor: '#ecf0f1',
-        margin:15
       },
     
       paragraph: {
         flex:1,
         fontSize: 30,
         fontWeight: 'bold',
-      
         color: '#34495e',
       },
       CardSliders:{
         flex: 1,
-         
-          margin: 15
+        margin: 15
       },
       Currency:{
           color:"#23a884"

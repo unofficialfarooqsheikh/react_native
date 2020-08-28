@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AppNavigator from './navigators/AppNavigator';
+import AppNavigator from "./navigators/AppNavigator";
 import * as Location from "expo-location";
 
 export default function App() {
@@ -29,7 +29,5 @@ export default function App() {
     })();
   });
 
-  return (
-    <AppNavigator />
-  );
+  return <AppNavigator />;
 }
