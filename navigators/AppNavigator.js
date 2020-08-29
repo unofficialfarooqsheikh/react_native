@@ -104,61 +104,58 @@ export default function AppNavigator() {
     );
   };
 
-  // const createBottomTab = ({ navigation }) => {
-  //   return (
-
-  //   );
-  // };
+  const CreateBottomTab = ({ navigation }) => {
+    return (
+    <BottomTab.Navigator
+    screenOptions={(route) => ({
+      tabBarIcon: (props) => {
+        console.log(route.route);
+        let iconName;
+        if (Platform.OS == "android") {
+          if (route.route.name == "Home") {
+            iconName = "home";
+          }
+          if (route.route.name == "Login") {
+            iconName = "login";
+          }
+          return (
+            <Entypo name={iconName} size={props.size} color={props.color} />
+          );
+        }
+        if (Platform.OS == "ios") {
+          if (route.route.name == "Home") {
+            iconName = "ios-home";
+          }
+          if (route.route.name == "Login") {
+            iconName = "ios-log-in";
+          }
+          return (
+            <Ionicons
+              name={iconName}
+              size={props.size}
+              color={props.color}
+            />
+          );
+        }
+      },
+      })}
+    >
+      <BottomTab.Screen
+        name="Home"
+        children={BottomTabOneContainer}
+        options={{ tabBarLabel: "Home" }}
+      />
+      <BottomTab.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ tabBarLabel: "Login" }}
+      />
+    </BottomTab.Navigator>);
+  };
 
   return (
     <NavigationContainer>
-      <BottomTab.Navigator
-        screenOptions={(route) => ({
-          tabBarIcon: (props) => {
-            console.log(route.route);
-            let iconName;
-            if (Platform.OS == "android") {
-              if (route.route.name == "Home") {
-                iconName = "home";
-              }
-              if (route.route.name == "Login") {
-                iconName = "login";
-              }
-              return (
-                <Entypo name={iconName} size={props.size} color={props.color} />
-              );
-            }
-            if (Platform.OS == "ios") {
-              if (route.route.name == "Home") {
-                iconName = "ios-home";
-              }
-              if (route.route.name == "Login") {
-                iconName = "ios-log-in";
-              }
-              return (
-                <Ionicons
-                  name={iconName}
-                  size={props.size}
-                  color={props.color}
-                />
-              );
-            }
-          },
-          // {
-          //   console.log(color.color,"Green",color.size)
-        })}
-      >
-        <BottomTab.Screen
-          name="Home"
-          children={BottomTabOneContainer}
-          options={{ tabBarLabel: "Home" }}
-        />
-        <BottomTab.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ tabBarLabel: "Login" }}
-        />
-      </BottomTab.Navigator>
+      <CreateBottomTab />
     </NavigationContainer>
   );
 }
