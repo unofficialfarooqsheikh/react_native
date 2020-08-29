@@ -23,7 +23,6 @@ import {
 } from "react-native-responsive-screen";
 const { width, height } = Dimensions.get("window");
 export default function HomeScreen({ navigation }) {
-  console.log(navigation);
   // Images for slider
   const ImageList = [
     "https://offsetnow.com/assets/images/banner1.jpg",
