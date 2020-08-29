@@ -17,6 +17,7 @@ import colors from "../constants/colors";
 import { Slider, Tooltip } from "react-native-elements";
 import SliderCards from "../components/carousel/cards/donate_cards";
 import FeatureCards from "../components/carousel/cards/featureCard";
+import WavyHeader from "../components/SvgBackground/svgBackground";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -119,6 +120,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <ScrollView style={{ flex: 1 , backgroundColor:"#DCDCDC"}}>
       {/* Temporary slider box which would be replaced by customer slider box */}
+      
       <SliderBox
         sliderBoxHeight={height / 3}
         circleLoop
@@ -129,6 +131,7 @@ export default function HomeScreen({ navigation }) {
         dotColor="#FFEE58"
         inactiveDotColor="#90A4AE"
       />
+     
       {/* return No of cards as much as length of data in DataList */}
       <View>
         {DataList.map((item, index) => {
