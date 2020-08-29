@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import HomeScreen from "../screens/HomeScreen";
@@ -56,11 +56,11 @@ export default function AppNavigator() {
   // Creating the Home tab where all the tabs are present
   const BottomTabOneContainer = ({ navigation }) => {
     return (
-      <Drawer.Navigator initialRouteName="BROWSE PLEDGE">
-        <Drawer.Screen name="BROWSE PLEDGE" children={createMainStack} />
-        <Drawer.Screen name="Start A Pledge" component={ScreenOne} />
-        <Drawer.Screen name="How It Works" component={ScreenTwo} />
-        <Drawer.Screen name="Contact" component={ScreenThree} />
+      <Drawer.Navigator initialRouteName="My Pledges" drawerType={'back'} drawerPosition={"right"} >
+        <Drawer.Screen name="My Pledges" children={createMainStack} />
+        <Drawer.Screen name="Privacy Policy" component={ScreenOne} />
+        {/* <Drawer.Screen name="How It Works" component={ScreenTwo} /> */}
+        {/* <Drawer.Screen name="Contact" component={ScreenThree} /> */}
       </Drawer.Navigator>
     );
   };
@@ -75,7 +75,7 @@ export default function AppNavigator() {
           component={HomeScreen}
           options={{
             headerTitle: () => (
-              <View style={{ alignSelf: "center" }}>
+              <View style={{ alignSelf: "center"}}>
                 <Image
                   style={{ width: 200, height: 50 }}
                   resizeMode="contain"
@@ -86,8 +86,8 @@ export default function AppNavigator() {
               </View>
             ),
 
-            headerLeft: () => (
-              <View style={{ paddingLeft: 12 }}>
+            headerRight: () => (
+              <View style={{ paddingRight: 12 }}>
                 <Icon
                   name="three-bars"
                   size={40}
@@ -111,32 +111,24 @@ export default function AppNavigator() {
       tabBarIcon: (props) => {
         console.log(route.route);
         let iconName;
-        if (Platform.OS == "android") {
-          if (route.route.name == "Home") {
-            iconName = "home";
-          }
-          if (route.route.name == "Login") {
-            iconName = "login";
-          }
-          return (
-            <Entypo name={iconName} size={props.size} color={props.color} />
-          );
+        if (route.route.name == "Home") {
+          iconName = "home";
         }
-        if (Platform.OS == "ios") {
-          if (route.route.name == "Home") {
-            iconName = "ios-home";
-          }
-          if (route.route.name == "Login") {
-            iconName = "ios-log-in";
-          }
-          return (
-            <Ionicons
-              name={iconName}
-              size={props.size}
-              color={props.color}
-            />
-          );
+        if (route.route.name == "Login") {
+          iconName = "user";
         }
+        if (route.route.name == "Start") {
+          iconName = "add-to-list";
+        }
+        if (route.route.name == "Browse") {
+          iconName = "folder";
+        }
+        if (route.route.name == "Notification") {
+          iconName = "notification";
+        }
+        return (
+          <Entypo name={iconName} size={props.size} color={props.color} />
+        );
       },
       })}
     >
@@ -144,6 +136,21 @@ export default function AppNavigator() {
         name="Home"
         children={BottomTabOneContainer}
         options={{ tabBarLabel: "Home" }}
+      />
+      <BottomTab.Screen
+        name="Start"
+        children={OptionsScreen}
+        options={{ tabBarLabel: "Start a pledge" }}
+      />
+      <BottomTab.Screen
+        name="Browse"
+        children={OptionsScreen}
+        options={{ tabBarLabel: "Browse a Pledge" }}
+      />
+      <BottomTab.Screen
+        name="Notification"
+        children={OptionsScreen}
+        options={{ tabBarLabel: "Notifications" }}
       />
       <BottomTab.Screen
         name="Login"
