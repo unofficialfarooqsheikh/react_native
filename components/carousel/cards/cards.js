@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   cardView: {
     flex: 1,
     width: wp("90%"),
-    height: height > 770 ? hp("30%") : hp("37%"),
+    height: height > 770 ? hp("31%") : hp("37%"),
     backgroundColor: "white",
     margin: wp("5%"),
     shadowColor: "#000",
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: wp("90%"),
-    height: height > 770 ? hp("30%") : hp("37%"),
+    height: height > 770 ? hp("31%") : hp("37%"),
   },
   itemTitle: {
     color: "white",

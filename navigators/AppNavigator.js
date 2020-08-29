@@ -14,9 +14,13 @@ import {
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+import {DrawerContent} from "../components/DrawerContent";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import OptionsScreen from "../screens/OptionsScreen";
@@ -56,9 +60,14 @@ export default function AppNavigator() {
   // Creating the Home tab where all the tabs are present
   const BottomTabOneContainer = ({ navigation }) => {
     return (
-      <Drawer.Navigator initialRouteName="My Pledges" drawerType={'back'} drawerPosition={"right"} >
-        <Drawer.Screen name="My Pledges" children={createMainStack} />
-        <Drawer.Screen name="Privacy Policy" component={ScreenOne} />
+      <Drawer.Navigator
+        initialRouteName="Pledges"
+        drawerContent={props=><DrawerContent {...props}/>}
+        drawerType={"back"}
+        drawerPosition={"right"}
+      >
+        <Drawer.Screen name="Pledges" children={createMainStack} />
+        <Drawer.Screen name="PolicyScreen" component={ScreenOne} />
         {/* <Drawer.Screen name="How It Works" component={ScreenTwo} /> */}
         {/* <Drawer.Screen name="Contact" component={ScreenThree} /> */}
       </Drawer.Navigator>
@@ -68,96 +77,97 @@ export default function AppNavigator() {
   // creating the main stack and all the Header is designed here
   const createMainStack = ({ navigation }) => {
     return (
-      <HomeStack.Navigator initialRouteName="App Name">
+      <HomeStack.Navigator initialRouteName="App Name" screenOptions= {{
+        headerTitle: () => (
+          <View style={{ alignSelf: "center" }}>
+            <Image
+              style={{ width: 200, height: 50 }}
+              resizeMode="contain"
+              source={{
+                uri: "https://offsetnow.com/assets/Offset_Logo_2.png",
+              }}
+            />
+          </View>
+        ),
+
+        headerRight: () => (
+          <View style={{ paddingRight: 12 }}>
+            <Icon
+              name="three-bars"
+              size={40}
+              color="#000"
+              onPress={() => navigation.openDrawer()}
+            />
+          </View>
+        ),
+      }}>
         {/* this is for the home screen and options is used here for designing the header bar */}
         <HomeStack.Screen
           name="App Name"
           component={HomeScreen}
-          options={{
-            headerTitle: () => (
-              <View style={{ alignSelf: "center"}}>
-                <Image
-                  style={{ width: 200, height: 50 }}
-                  resizeMode="contain"
-                  source={{
-                    uri: "https://offsetnow.com/assets/Offset_Logo_2.png",
-                  }}
-                />
-              </View>
-            ),
-
-            headerRight: () => (
-              <View style={{ paddingRight: 12 }}>
-                <Icon
-                  name="three-bars"
-                  size={40}
-                  color="#000"
-                  onPress={() => navigation.openDrawer()}
-                />
-              </View>
-            ),
-          }}
+          
         />
         {/* another screen */}
-        <HomeStack.Screen name="Options" component={OptionsScreen} />
+        <HomeStack.Screen name="Options" component={OptionsScreen}/>
       </HomeStack.Navigator>
     );
   };
 
   const CreateBottomTab = ({ navigation }) => {
     return (
-    <BottomTab.Navigator
-    screenOptions={(route) => ({
-      tabBarIcon: (props) => {
-        console.log(route.route);
-        let iconName;
-        if (route.route.name == "Home") {
-          iconName = "home";
-        }
-        if (route.route.name == "Login") {
-          iconName = "user";
-        }
-        if (route.route.name == "Start") {
-          iconName = "add-to-list";
-        }
-        if (route.route.name == "Browse") {
-          iconName = "folder";
-        }
-        if (route.route.name == "Notification") {
-          iconName = "notification";
-        }
-        return (
-          <Entypo name={iconName} size={props.size} color={props.color} />
-        );
-      },
-      })}
-    >
-      <BottomTab.Screen
-        name="Home"
-        children={BottomTabOneContainer}
-        options={{ tabBarLabel: "Home" }}
-      />
-      <BottomTab.Screen
-        name="Start"
-        children={OptionsScreen}
-        options={{ tabBarLabel: "Start a pledge" }}
-      />
-      <BottomTab.Screen
-        name="Browse"
-        children={OptionsScreen}
-        options={{ tabBarLabel: "Browse a Pledge" }}
-      />
-      <BottomTab.Screen
-        name="Notification"
-        children={OptionsScreen}
-        options={{ tabBarLabel: "Notifications" }}
-      />
-      <BottomTab.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ tabBarLabel: "Login" }}
-      />
-    </BottomTab.Navigator>);
+      <BottomTab.Navigator
+        screenOptions={(route) => ({
+          tabBarIcon: (props) => {
+            console.log(route.route);
+            let iconName;
+            if (route.route.name == "Home") {
+              iconName = "home";
+            }
+            if (route.route.name == "Login") {
+              iconName = "user";
+            }
+            if (route.route.name == "Start") {
+              iconName = "add-to-list";
+            }
+            if (route.route.name == "Browse") {
+              iconName = "folder";
+            }
+            if (route.route.name == "Notification") {
+              iconName = "notification";
+            }
+            return (
+              <Entypo name={iconName} size={props.size} color={props.color} />
+            );
+          },
+        })}
+      >
+        <BottomTab.Screen
+          name="Home"
+          children={BottomTabOneContainer}
+          options={{ tabBarLabel: "Home" }}
+        />
+        <BottomTab.Screen
+          name="Start"
+          children={OptionsScreen}
+          options={{ tabBarLabel: "Start a pledge" }}
+        />
+        <BottomTab.Screen
+          name="Browse"
+          children={OptionsScreen}
+          options={{ tabBarLabel: "Browse a Pledge" }}
+        />
+        <BottomTab.Screen
+          name="Notification"
+          children={OptionsScreen}
+          options={{ tabBarLabel: "Notifications" }}
+        />
+        <BottomTab.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ tabBarLabel: "Login" }}
+        />
+      </BottomTab.Navigator>
+    );
   };
 
   return (
