@@ -171,7 +171,7 @@ export default function AppNavigator() {
   };
 
   return (
-    <NavigationContainer>
+    <NavigationContainer >
       <CreateBottomTab />
     </NavigationContainer>
   );
