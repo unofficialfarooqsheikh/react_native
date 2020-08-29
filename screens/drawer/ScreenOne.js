@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { DataTable } from 'react-native-paper';
 
 export default function ScreenOne() {
   return (

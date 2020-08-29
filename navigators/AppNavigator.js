@@ -16,6 +16,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import  DrawerContent from "../components/DrawerContent"
 
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
@@ -56,9 +57,15 @@ export default function AppNavigator() {
   // Creating the Home tab where all the tabs are present
   const BottomTabOneContainer = ({ navigation }) => {
     return (
-      <Drawer.Navigator initialRouteName="My Pledges" drawerType={'back'} drawerPosition={"right"} >
-        <Drawer.Screen name="My Pledges" children={createMainStack} />
-        <Drawer.Screen name="Privacy Policy" component={ScreenOne} />
+      <Drawer.Navigator
+        initialRouteName="Home"
+        drawerContent={props=><DrawerContent {...props}/>}
+        drawerType={"back"}
+        drawerPosition={"right"}
+      >
+        <Drawer.Screen name="Home" children={createMainStack} />
+        <Drawer.Screen name="Pledges" component={ScreenOne} />
+        <Drawer.Screen name="PolicyScreen" component={ScreenTwo} />
         {/* <Drawer.Screen name="How It Works" component={ScreenTwo} /> */}
         {/* <Drawer.Screen name="Contact" component={ScreenThree} /> */}
       </Drawer.Navigator>
