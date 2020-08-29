@@ -107,6 +107,11 @@ export default function AppNavigator() {
   const CreateBottomTab = ({ navigation }) => {
     return (
     <BottomTab.Navigator
+    tabBarOptions={{
+      activeTintColor: '#24C15B',
+      style: { backgroundColor: '#171E6D'}
+
+    }}
     screenOptions={(route) => ({
       tabBarIcon: (props) => {
         console.log(route.route);
@@ -127,9 +132,10 @@ export default function AppNavigator() {
           iconName = "notification";
         }
         return (
-          <Entypo name={iconName} size={props.size} color={props.color} />
+          <Entypo name={iconName} size={props.size} color={props.color}/>
         );
       },
+    
       })}
     >
       <BottomTab.Screen
@@ -161,7 +167,7 @@ export default function AppNavigator() {
   };
 
   return (
-    <NavigationContainer>
+    <NavigationContainer >
       <CreateBottomTab />
     </NavigationContainer>
   );
