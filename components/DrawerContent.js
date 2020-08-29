@@ -21,7 +21,7 @@ import { log } from "react-native-reanimated";
 
 const { width, height } = Dimensions.get("window");
 
-export function DrawerContent(props) {
+export default function DrawerContent(props) {
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
@@ -41,20 +41,26 @@ export function DrawerContent(props) {
             </View>
           </View>
         </View>
-      <Drawer.Section>
-        <DrawerItem style={styles.drawerSection}
-          label="My Pledges"
-          onPress={() => {
-            props.navigation.navigate("Pledges");
-          }}
-        ></DrawerItem>
-        <DrawerItem
-          label="Privacy Policy"
-          onPress={() => {
-            props.navigation.navigate("PolicyScreen");
-          }}
-        ></DrawerItem>
-      </Drawer.Section>
+        <Drawer.Section>
+          <DrawerItem
+            label="Home"
+            onPress={() => {
+              props.navigation.navigate("Home");
+            }}
+          ></DrawerItem>
+          <DrawerItem
+            label="My Pledges"
+            onPress={() => {
+              props.navigation.navigate("Pledges");
+            }}
+          ></DrawerItem>
+          <DrawerItem
+            label="Privacy Policy"
+            onPress={() => {
+              props.navigation.navigate("PolicyScreen");
+            }}
+          ></DrawerItem>
+        </Drawer.Section>
       </DrawerContentScrollView>
 
       <Drawer.Section>
