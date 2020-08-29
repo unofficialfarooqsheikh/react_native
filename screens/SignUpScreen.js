@@ -12,7 +12,7 @@ import {
 import colors from "../constants/colors";
 import { color } from "react-native-reanimated";
 
-export default function LoginScreen({ navigation }) {
+export default function SignUpScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -25,6 +25,14 @@ export default function LoginScreen({ navigation }) {
         />
       </View>
       <View style={styles.footer}>
+      <Text style={styles.textFooter}>Name</Text>
+        <View style={styles.action}>
+          <TextInput
+            placeholder="Your name"
+            style={styles.textInput}
+            autoCapitalize="none"
+          />
+        </View>
         <Text style={styles.textFooter}>Email</Text>
         <View style={styles.action}>
           <TextInput
@@ -36,30 +44,32 @@ export default function LoginScreen({ navigation }) {
         <Text style={[styles.text_footer, { marginTop: 30 }]}>Password</Text>
         <View style={styles.action}>
           <TextInput
-            placeholder="Password"
+            placeholder="Set password"
             style={styles.textInput}
             secureTextEntry={true}
           />
         </View>
-        <View style={[styles.signIn, { justifyContent: "space-between" }]}>
-          <TouchableOpacity activeOpacity={0.6} >
-            <View style={styles.button}>
-                <Text style={styles.buttonText}>Sign In</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.6}>
-            <View>
-              <Text style={styles.forgotPasswordText}>Forgot password</Text>
-            </View>
-          </TouchableOpacity>
+        <Text style={[styles.text_footer, { marginTop: 30 }]}>Confirm password</Text>
+        <View style={styles.action}>
+          <TextInput
+            placeholder="confirm password"
+            style={styles.textInput}
+            secureTextEntry={true}
+          />
         </View>
-        <View style={styles.signIn}>
-          <View>
-            <Text>New to Offsetnow?</Text>
-          </View>
+        <View style={[styles.signUp, { justifyContent: "space-between" }]}>
           <TouchableOpacity activeOpacity={0.6}>
-            <View>
-              <Text style={styles.signUpTest}>Sign Up</Text>
+            <View style={styles.button}>
+              <View style={styles.button}>
+                <Text style={styles.buttonText}>Sign Up</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.6}>
+          <View style={styles.button}>
+              <View style={styles.button}>
+                <Text style={styles.buttonText}>Back</Text>
+              </View>
             </View>
           </TouchableOpacity>
         </View>
@@ -119,10 +129,9 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    paddingVertical: 10,
-    // alignItems: "center",
+    padding: 10,
+    alignItems: "center",
     color: "#fff",
-    textAlign: 'center'
   },
   forgotPassword: {
     flex: 1,
@@ -136,7 +145,7 @@ const styles = StyleSheet.create({
     color: "#21a984",
   },
 
-  signIn: {
+  signUp: {
     flexDirection: "row",
     marginTop: 20,
     marginBottom: 20,
