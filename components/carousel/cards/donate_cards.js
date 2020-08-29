@@ -71,6 +71,7 @@ const SliderCards = ({ data }) => {
                         title="Donate"
 
                     />
+                  
                 </View>
             </View>
         </View>
