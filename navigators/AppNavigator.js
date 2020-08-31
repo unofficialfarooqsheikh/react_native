@@ -62,7 +62,6 @@ export default function AppNavigator() {
       <Drawer.Navigator
         initialRouteName="Home"
         drawerContent={props=><DrawerContent {...props}/>}
-        drawerType={"back"}
         drawerPosition={"right"}
       >
         <Drawer.Screen name="Home" children={createMainStack} />
