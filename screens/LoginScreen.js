@@ -13,6 +13,7 @@ import colors from "../constants/colors";
 import { color } from "react-native-reanimated";
 
 export default function LoginScreen({ navigation }) {
+  console.log(navigation);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -59,7 +60,9 @@ export default function LoginScreen({ navigation }) {
           </View>
           <TouchableOpacity activeOpacity={0.6}>
             <View>
-              <Text style={styles.signUpTest}>Sign Up</Text>
+              <Text style={styles.signUpTest}
+                onPress = {() => {navigation.navigate('SignUp')}}
+              >Sign Up</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -114,13 +117,12 @@ const styles = StyleSheet.create({
 
   button: {
     backgroundColor: "#21a984",
-    paddingLeft: 10,
-    width: 100,
+    width: 120,
   },
 
   buttonText: {
     paddingVertical: 10,
-    // alignItems: "center",
+    alignItems: "center",
     color: "#fff",
     textAlign: 'center'
   },

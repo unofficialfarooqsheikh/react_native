@@ -33,10 +33,18 @@ export default function SignUpScreen({ navigation }) {
             autoCapitalize="none"
           />
         </View>
-        <Text style={styles.textFooter}>Email</Text>
+        <Text style={[styles.textFooter, { marginTop: 30 }]}>Email</Text>
         <View style={styles.action}>
           <TextInput
             placeholder="Your email"
+            style={styles.textInput}
+            autoCapitalize="none"
+          />
+        </View>
+        <Text style={[styles.textFooter, { marginTop: 30 }]}>Mobile No.</Text>
+        <View style={styles.action}>
+          <TextInput
+            placeholder="Mobile number"
             style={styles.textInput}
             autoCapitalize="none"
           />
@@ -60,16 +68,14 @@ export default function SignUpScreen({ navigation }) {
         <View style={[styles.signUp, { justifyContent: "space-between" }]}>
           <TouchableOpacity activeOpacity={0.6}>
             <View style={styles.button}>
-              <View style={styles.button}>
                 <Text style={styles.buttonText}>Sign Up</Text>
-              </View>
             </View>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.6}>
           <View style={styles.button}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>Back</Text>
-              </View>
+                <Text style={styles.buttonText}
+                  onPress = {() => {navigation.goBack()}}
+                >Back</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -121,17 +127,16 @@ const styles = StyleSheet.create({
     borderBottomColor: "#21a984",
     paddingBottom: 5,
   },
-
   button: {
     backgroundColor: "#21a984",
-    paddingLeft: 10,
-    width: 100,
+    width: 120,
   },
 
   buttonText: {
-    padding: 10,
+    paddingVertical: 10,
     alignItems: "center",
     color: "#fff",
+    textAlign: 'center'
   },
   forgotPassword: {
     flex: 1,
@@ -155,4 +160,9 @@ const styles = StyleSheet.create({
     color: "#21a984",
     paddingLeft: 10,
   },
+
+  backText: {
+    alignItems: "center",
+    color: "#fff",
+  }
 });

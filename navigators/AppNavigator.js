@@ -29,6 +29,8 @@ import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 import Constants from "expo-constants";
+import SignUpScreen from "../screens/SignUpScreen";
+import colors from "../constants/colors";
 // getting the dimensions of the screen
 const { width, height } = Dimensions.get("window");
 // just to get idea of the height and width of the device
@@ -107,6 +109,8 @@ export default function AppNavigator() {
         />
         {/* another screen */}
         <HomeStack.Screen name="Options" component={OptionsScreen} />
+        <HomeStack.Screen name="SignUp" component={SignUpScreen} />
+
       </HomeStack.Navigator>
     );
   };
@@ -115,8 +119,9 @@ export default function AppNavigator() {
     return (
     <BottomTab.Navigator
     tabBarOptions={{
-      activeTintColor: '#24C15B',
-      style: { backgroundColor: '#171E6D'}
+      inactiveTintColor: 'white',
+      activeTintColor: 'black',
+      style: { backgroundColor: colors.primary}
 
     }}
     screenOptions={(route) => ({
@@ -139,7 +144,7 @@ export default function AppNavigator() {
           iconName = "notification";
         }
         return (
-          <Entypo name={iconName} size={props.size} color={props.color}/>
+          <Entypo name={iconName} size={props.size} color= 'white' />
         );
       },
     
