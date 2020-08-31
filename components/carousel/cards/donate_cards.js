@@ -66,11 +66,13 @@ const SliderCards = ({ data }) => {
 
                 </View>
                 <View style={styles.donateBtn} >
-                    <Button
-
-                        title="Donate"
-
-                    />
+                <TouchableOpacity activeOpacity={0.6}>
+                    <View style={styles.button}>
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>Donate</Text>
+                    </View>
+                    </View>
+                </TouchableOpacity>
                   
                 </View>
             </View>
@@ -155,6 +157,19 @@ const styles = StyleSheet.create({
     },
     TextView: {
     },
+
+    
+  button: {
+    backgroundColor: "#21a984",
+    paddingLeft: 10,
+  },
+
+  buttonText: {
+    paddingVertical: 10,
+    alignItems: "center",
+    color: "#fff",
+    textAlign: 'center'
+  },
 })
 
 export default SliderCards

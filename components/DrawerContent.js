@@ -10,7 +10,7 @@ import {
   TouchableRipple,
   Switch,
 } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/FontAwesome";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import {
   heightPercentageToDP as hp,
@@ -43,18 +43,48 @@ export default function DrawerContent(props) {
         </View>
         <Drawer.Section>
           <DrawerItem
-            label="Home"
+          icon={(props) => {
+            console.log(props);
+            return (
+              <Icon
+                name={"edit"}
+                color={props.color}
+                size={props.size}
+              />
+            );
+          }}
+            label="Profile"
             onPress={() => {
               props.navigation.navigate("Home");
             }}
           ></DrawerItem>
-          <DrawerItem
+          <DrawerItem 
+            icon={(props) => {
+              console.log(props);
+              return (
+                <Icon
+                  name={"folder-open-o"}
+                  color={props.color}
+                  size={props.size}
+                />
+              );
+            }}
             label="My Pledges"
             onPress={() => {
               props.navigation.navigate("Pledges");
             }}
           ></DrawerItem>
           <DrawerItem
+          icon={(props) => {
+            console.log(props);
+            return (
+              <Icon
+                name={"file-text-o"}
+                color={props.color}
+                size={props.size}
+              />
+            );
+          }}
             label="Privacy Policy"
             onPress={() => {
               props.navigation.navigate("PolicyScreen");
@@ -69,7 +99,7 @@ export default function DrawerContent(props) {
             console.log(props);
             return (
               <Icon
-                name={"exit-to-app"}
+                name={"sign-out"}
                 color={props.color}
                 size={props.size}
               />

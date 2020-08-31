@@ -25,10 +25,11 @@ import ScreenOne from "../screens/drawer/ScreenOne";
 import ScreenTwo from "../screens/drawer/ScreenTwo";
 import ScreenThree from "../screens/drawer/ScreenThree";
 import Icon from "react-native-vector-icons/Octicons";
-import { Entypo } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from '@expo/vector-icons'; 
 import Colors from "../constants/colors";
 import Constants from "expo-constants";
+import SignUpScreen from "../screens/SignUpScreen";
+import colors from "../constants/colors";
 // getting the dimensions of the screen
 const { width, height } = Dimensions.get("window");
 // just to get idea of the height and width of the device
@@ -49,6 +50,7 @@ export default function AppNavigator() {
 
   // stack navigator initialized
   const HomeStack = createStackNavigator();
+  const LoginStack = createStackNavigator();
   // drawer navigator initialized
   const Drawer = createDrawerNavigator();
   // tabs navigator initialized
@@ -60,7 +62,6 @@ export default function AppNavigator() {
       <Drawer.Navigator
         initialRouteName="Home"
         drawerContent={props=><DrawerContent {...props}/>}
-        drawerType={"back"}
         drawerPosition={"right"}
       >
         <Drawer.Screen name="Home" children={createMainStack} />
@@ -71,7 +72,15 @@ export default function AppNavigator() {
       </Drawer.Navigator>
     );
   };
-
+ //creating the login stack
+ const loginStack = ()=>{
+   return (
+     <LoginStack.Navigator>
+     <LoginStack.Screen name="login" component={LoginScreen} />
+     <LoginStack.Screen name="signup" component={SignUpScreen} />
+    </LoginStack.Navigator>
+   )
+ }
   // creating the main stack and all the Header is designed here
   const createMainStack = ({ navigation }) => {
     return (
@@ -92,7 +101,6 @@ export default function AppNavigator() {
                 />
               </View>
             ),
-
             headerRight: () => (
               <View style={{ paddingRight: 12 }}>
                 <Icon
@@ -115,8 +123,9 @@ export default function AppNavigator() {
     return (
     <BottomTab.Navigator
     tabBarOptions={{
-      activeTintColor: '#24C15B',
-      style: { backgroundColor: '#171E6D'}
+      inactiveTintColor: 'white',
+      activeTintColor: 'black',
+      style: { backgroundColor: colors.primary}
 
     }}
     screenOptions={(route) => ({
@@ -127,19 +136,19 @@ export default function AppNavigator() {
           iconName = "home";
         }
         if (route.route.name == "Login") {
-          iconName = "user";
+          iconName = "user-circle-o";
         }
         if (route.route.name == "Start") {
-          iconName = "add-to-list";
+          iconName = "plus";
         }
         if (route.route.name == "Browse") {
           iconName = "folder";
         }
         if (route.route.name == "Notification") {
-          iconName = "notification";
+          iconName = "bell";
         }
         return (
-          <Entypo name={iconName} size={props.size} color={props.color}/>
+          <FontAwesome name={iconName} size={props.size} color= 'white' />
         );
       },
     
@@ -167,7 +176,7 @@ export default function AppNavigator() {
       />
       <BottomTab.Screen
         name="Login"
-        component={LoginScreen}
+        children={loginStack}
         options={{ tabBarLabel: "Login" }}
       />
     </BottomTab.Navigator>);

@@ -63,9 +63,11 @@ const FeatureCards = ({data}) =>{
                     </View>
                 </View>
                 <View style={styles.donateBtn} >
-                    <Button
-                        title="Donate"
-                    />
+                <TouchableOpacity activeOpacity={0.6} >
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>Donate</Text>
+                    </View>
+                </TouchableOpacity>
                 </View>
             </View>
             
@@ -150,7 +152,19 @@ imageCover:{
     fontSize:25,
     color:'#fff',
     textAlign:'center'
-  }
+  },
+  
+  button: {
+    backgroundColor: "#21a984",
+    width: 200,
+  },
+
+  buttonText: {
+    paddingVertical: 10,
+    alignItems: "center",
+    color: "#fff",
+    textAlign: 'center'
+  },
 })
 
 export default FeatureCards
