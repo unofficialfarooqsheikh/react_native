@@ -94,7 +94,6 @@ export default function AppNavigator() {
                 />
               </View>
             ),
-
             headerRight: () => (
               <View style={{ paddingRight: 12 }}>
                 <Icon

@@ -5,12 +5,12 @@ import {
   Image,
   TextInput,
   View,
+  ScrollView,
   Button,
   TouchableOpacity,
 } from "react-native";
 
 import colors from "../constants/colors";
-import { color } from "react-native-reanimated";
 
 export default function SignUpScreen({ navigation }) {
   return (
@@ -25,60 +25,62 @@ export default function SignUpScreen({ navigation }) {
         />
       </View>
       <View style={styles.footer}>
-      <Text style={styles.textFooter}>Name</Text>
-        <View style={styles.action}>
-          <TextInput
-            placeholder="Your name"
-            style={styles.textInput}
-            autoCapitalize="none"
-          />
-        </View>
-        <Text style={[styles.textFooter, { marginTop: 30 }]}>Email</Text>
-        <View style={styles.action}>
-          <TextInput
-            placeholder="Your email"
-            style={styles.textInput}
-            autoCapitalize="none"
-          />
-        </View>
-        <Text style={[styles.textFooter, { marginTop: 30 }]}>Mobile No.</Text>
-        <View style={styles.action}>
-          <TextInput
-            placeholder="Mobile number"
-            style={styles.textInput}
-            autoCapitalize="none"
-          />
-        </View>
-        <Text style={[styles.text_footer, { marginTop: 30 }]}>Password</Text>
-        <View style={styles.action}>
-          <TextInput
-            placeholder="Set password"
-            style={styles.textInput}
-            secureTextEntry={true}
-          />
-        </View>
-        <Text style={[styles.text_footer, { marginTop: 30 }]}>Confirm password</Text>
-        <View style={styles.action}>
-          <TextInput
-            placeholder="confirm password"
-            style={styles.textInput}
-            secureTextEntry={true}
-          />
-        </View>
-        <View style={[styles.signUp, { justifyContent: "space-between" }]}>
-          <TouchableOpacity activeOpacity={0.6}>
+      <ScrollView>
+        <Text style={styles.textFooter}>Name</Text>
+          <View style={styles.action}>
+            <TextInput
+              placeholder="Your name"
+              style={styles.textInput}
+              autoCapitalize="none"
+            />
+          </View>
+          <Text style={[styles.textFooter, { marginTop: 30 }]}>Email</Text>
+          <View style={styles.action}>
+            <TextInput
+              placeholder="Your email"
+              style={styles.textInput}
+              autoCapitalize="none"
+            />
+          </View>
+          <Text style={[styles.textFooter, { marginTop: 30 }]}>Mobile No.</Text>
+          <View style={styles.action}>
+            <TextInput
+              placeholder="Mobile number"
+              style={styles.textInput}
+              autoCapitalize="none"
+            />
+          </View>
+          <Text style={[styles.text_footer, { marginTop: 30 }]}>Password</Text>
+          <View style={styles.action}>
+            <TextInput
+              placeholder="Set password"
+              style={styles.textInput}
+              secureTextEntry={true}
+            />
+          </View>
+          <Text style={[styles.text_footer, { marginTop: 30 }]}>Confirm password</Text>
+          <View style={styles.action}>
+            <TextInput
+              placeholder="confirm password"
+              style={styles.textInput}
+              secureTextEntry={true}
+            />
+          </View>
+          <View style={[styles.signUp, { justifyContent: "space-between" }]}>
+            <TouchableOpacity activeOpacity={0.6}>
+              <View style={styles.button}>
+                  <Text style={styles.buttonText}>Sign Up</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.6}>
             <View style={styles.button}>
-                <Text style={styles.buttonText}>Sign Up</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.6}>
-          <View style={styles.button}>
-                <Text style={styles.buttonText}
-                  onPress = {() => {navigation.goBack()}}
-                >Back</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+                  <Text style={styles.buttonText}
+                    onPress = {() => {navigation.goBack()}}
+                  >Back</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
