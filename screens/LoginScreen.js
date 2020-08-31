@@ -61,7 +61,7 @@ export default function LoginScreen({ navigation }) {
           <TouchableOpacity activeOpacity={0.6}>
             <View>
               <Text style={styles.signUpTest}
-                onPress = {() => {navigation.navigate('SignUp')}}
+                onPress = {() => {navigation.navigate('signup')}}
               >Sign Up</Text>
             </View>
           </TouchableOpacity>
