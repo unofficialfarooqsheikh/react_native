@@ -139,16 +139,16 @@ export default function AppNavigator() {
           iconName = "user-circle-o";
         }
         if (route.route.name == "Start") {
-          iconName = "plus";
+          iconName = "plus-circle";
         }
         if (route.route.name == "Browse") {
-          iconName = "folder";
+          iconName = "edge";
         }
         if (route.route.name == "Notification") {
           iconName = "bell";
         }
         return (
-          <FontAwesome name={iconName} size={props.size} color= 'white' />
+          <FontAwesome name={iconName} size={props.size} color= 'blac' />
         );
       },
     
