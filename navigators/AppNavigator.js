@@ -14,18 +14,23 @@ import {
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import  DrawerContent from "../components/DrawerContent"
+import DrawerContent from "../components/DrawerContent";
 
 import HomeScreen from "../screens/HomeScreen";
+import BrowseAPledge from "../screens/BrowseAPledge";
 import LoginScreen from "../screens/LoginScreen";
 import OptionsScreen from "../screens/OptionsScreen";
 import ScreenOne from "../screens/drawer/ScreenOne";
 import ScreenTwo from "../screens/drawer/ScreenTwo";
 import ScreenThree from "../screens/drawer/ScreenThree";
 import Icon from "react-native-vector-icons/Octicons";
-import { FontAwesome } from '@expo/vector-icons'; 
+import { FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 import Constants from "expo-constants";
 import SignUpScreen from "../screens/SignUpScreen";
@@ -60,27 +65,27 @@ export default function AppNavigator() {
   const BottomTabOneContainer = ({ navigation }) => {
     return (
       <Drawer.Navigator
-        initialRouteName="Home"
-        drawerContent={props=><DrawerContent {...props}/>}
+        openByDefault="Homescreen"
+        initialRouteName="Homescreen"
+        drawerContent={(props) => <DrawerContent {...props} />}
         drawerPosition={"right"}
       >
-        <Drawer.Screen name="Home" children={createMainStack} />
-        <Drawer.Screen name="Pledges" component={ScreenOne} />
-        <Drawer.Screen name="PolicyScreen" component={ScreenTwo} />
-        {/* <Drawer.Screen name="How It Works" component={ScreenTwo} /> */}
-        {/* <Drawer.Screen name="Contact" component={ScreenThree} /> */}
+        <Drawer.Screen name="Homescreen" children={createMainStack} />
+        <Drawer.Screen name="Profile" children={ScreenOne} />
+        <Drawer.Screen name="Pledges" component={ScreenTwo} />
+        <Drawer.Screen name="PolicyScreen" component={ScreenThree} />
       </Drawer.Navigator>
     );
   };
- //creating the login stack
- const loginStack = ()=>{
-   return (
-     <LoginStack.Navigator>
-     <LoginStack.Screen name="login" component={LoginScreen} />
-     <LoginStack.Screen name="signup" component={SignUpScreen} />
-    </LoginStack.Navigator>
-   )
- }
+  //creating the login stack
+  const loginStack = () => {
+    return (
+      <LoginStack.Navigator>
+        <LoginStack.Screen name="login" component={LoginScreen} />
+        <LoginStack.Screen name="signup" component={SignUpScreen} />
+      </LoginStack.Navigator>
+    );
+  };
   // creating the main stack and all the Header is designed here
   const createMainStack = ({ navigation }) => {
     return (
@@ -91,7 +96,7 @@ export default function AppNavigator() {
           component={HomeScreen}
           options={{
             headerTitle: () => (
-              <View style={{ alignSelf: "center"}}>
+              <View style={{ alignSelf: "center" }}>
                 <Image
                   style={{ width: 200, height: 50 }}
                   resizeMode="contain"
@@ -105,7 +110,7 @@ export default function AppNavigator() {
               <View style={{ paddingRight: 12 }}>
                 <Icon
                   name="three-bars"
-                  size={40}
+                  size={25}
                   color="#000"
                   onPress={() => navigation.openDrawer()}
                 />
@@ -121,69 +126,74 @@ export default function AppNavigator() {
 
   const CreateBottomTab = ({ navigation }) => {
     return (
-    <BottomTab.Navigator
-    tabBarOptions={{
-      inactiveTintColor: 'white',
-      activeTintColor: 'black',
-      style: { backgroundColor: colors.primary}
-
-    }}
-    screenOptions={(route) => ({
-      tabBarIcon: (props) => {
-        console.log(route.route);
-        let iconName;
-        if (route.route.name == "Home") {
-          iconName = "home";
-        }
-        if (route.route.name == "Login") {
-          iconName = "user-circle-o";
-        }
-        if (route.route.name == "Start") {
-          iconName = "plus";
-        }
-        if (route.route.name == "Browse") {
-          iconName = "folder";
-        }
-        if (route.route.name == "Notification") {
-          iconName = "bell";
-        }
-        return (
-          <FontAwesome name={iconName} size={props.size} color= 'white' />
-        );
-      },
-    
-      })}
-    >
-      <BottomTab.Screen
-        name="Home"
-        children={BottomTabOneContainer}
-        options={{ tabBarLabel: "Home" }}
-      />
-      <BottomTab.Screen
-        name="Start"
-        children={OptionsScreen}
-        options={{ tabBarLabel: "Start a pledge" }}
-      />
-      <BottomTab.Screen
-        name="Browse"
-        children={OptionsScreen}
-        options={{ tabBarLabel: "Browse a Pledge" }}
-      />
-      <BottomTab.Screen
-        name="Notification"
-        children={OptionsScreen}
-        options={{ tabBarLabel: "Notifications" }}
-      />
-      <BottomTab.Screen
-        name="Login"
-        children={loginStack}
-        options={{ tabBarLabel: "Login" }}
-      />
-    </BottomTab.Navigator>);
+      <BottomTab.Navigator
+        tabBarOptions={{
+          inactiveTintColor: "white",
+          activeTintColor: "black",
+          style: { backgroundColor: colors.primary },
+        }}
+        screenOptions={(route) => ({
+          tabBarIcon: (props) => {
+            let iconName;
+            if (route.route.name == "Home") {
+              iconName = "home";
+            }
+            if (route.route.name == "Login") {
+              iconName = "user-circle-o";
+            }
+            if (route.route.name == "Start") {
+              iconName = "plus";
+            }
+            if (route.route.name == "Browse") {
+              iconName = "folder";
+            }
+            if (route.route.name == "Notification") {
+              iconName = "bell";
+            }
+            return (
+              <FontAwesome name={iconName} size={props.size} color="white" />
+            );
+          },
+        })}
+      >
+        <BottomTab.Screen
+          // listeners={(props) => {
+          //   console.log("***********************");
+          //   console.log(props);
+          // }}
+          name="Home"
+          children={BottomTabOneContainer}
+          options={{ tabBarLabel: "Home" }}
+          onPress={() => {
+            console.log(navigation);
+          }}
+        />
+        <BottomTab.Screen
+          name="Start"
+          children={OptionsScreen}
+          options={{ tabBarLabel: "Start a pledge" }}
+        />
+        <BottomTab.Screen
+          name="Browse"
+          children={BrowseAPledge}
+          options={{ tabBarLabel: "Browse a Pledge" }}
+        />
+        <BottomTab.Screen
+          name="Notification"
+          children={OptionsScreen}
+          options={{ tabBarLabel: "Notifications" }}
+        />
+        <BottomTab.Screen
+          name="Login"
+          children={loginStack}
+          options={{ tabBarLabel: "Login" }}
+        />
+      </BottomTab.Navigator>
+    );
   };
 
   return (
-    <NavigationContainer >
+    <NavigationContainer>
       <CreateBottomTab />
     </NavigationContainer>
   );

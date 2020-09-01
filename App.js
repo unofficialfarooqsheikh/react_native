@@ -1,12 +1,36 @@
 import React, { useState, useEffect } from "react";
+import { BackHandler,Alert } from "react-native";
+
 import AppNavigator from "./navigators/AppNavigator";
 import * as Location from "expo-location";
+
 
 export default function App() {
   //const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS)
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   // function to get the loaction
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("Hold on!", "Are you sure you want to go back?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction()
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();

@@ -44,7 +44,21 @@ export default function DrawerContent(props) {
         <Drawer.Section>
           <DrawerItem
           icon={(props) => {
-            console.log(props);
+            return (
+              <Icon
+                name={"home"}
+                color={props.color}
+                size={props.size}
+              />
+            );
+          }}
+            label="Home"
+            onPress={() => {
+              props.navigation.navigate("Homescreen");
+            }}
+          ></DrawerItem>
+          <DrawerItem
+          icon={(props) => {
             return (
               <Icon
                 name={"edit"}
@@ -55,12 +69,11 @@ export default function DrawerContent(props) {
           }}
             label="Profile"
             onPress={() => {
-              props.navigation.navigate("Home");
+              props.navigation.navigate("Profile");
             }}
           ></DrawerItem>
           <DrawerItem 
             icon={(props) => {
-              console.log(props);
               return (
                 <Icon
                   name={"folder-open-o"}
@@ -76,7 +89,6 @@ export default function DrawerContent(props) {
           ></DrawerItem>
           <DrawerItem
           icon={(props) => {
-            console.log(props);
             return (
               <Icon
                 name={"file-text-o"}
@@ -96,7 +108,6 @@ export default function DrawerContent(props) {
       <Drawer.Section>
         <DrawerItem
           icon={(props) => {
-            console.log(props);
             return (
               <Icon
                 name={"sign-out"}

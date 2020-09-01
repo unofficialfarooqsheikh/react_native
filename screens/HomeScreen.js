@@ -13,6 +13,7 @@ import {
 // import CarouselItem from '../components/carousel/carousel_item'
 import { SliderBox } from "react-native-image-slider-box";
 import CardsComponent from "../components/carousel/cards/cards";
+import { List } from 'react-native-paper';
 import TextComponent from "../components/carousel/textComponent";
 import colors from "../constants/colors";
 import { Slider, Tooltip } from "react-native-elements";
@@ -119,15 +120,16 @@ export default function HomeScreen({ navigation }) {
   const FundRaiseSlider = [{ Progress: "0.8" }];
   return (
     <ScrollView style={{ flex: 1 , backgroundColor:"#DCDCDC"}}>
-    
-    <Picker
-        selectedValue={"java"}
-        style={{ height: 50, width: 150 }}
-        onValueChange={() => {}}
-      >
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
-    </Picker>
+    <View style={{width:"20%"}}>
+      <List.AccordionGroup style={{width:"20%"}}>
+        <List.Accordion title="$" id="1" >
+          <List.Item title="$" onPress={(props)=>{}} />
+          <List.Item title="₹" onPress={()=>{}}/>
+          <List.Item title="¢" onPress={()=>{}}/>
+        </List.Accordion>
+      </List.AccordionGroup>
+    </View>
+
       {/* Temporary slider box which would be replaced by customer slider box */}
       <SliderBox
         sliderBoxHeight={height / 3}
