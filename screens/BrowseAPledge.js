@@ -72,7 +72,7 @@ export default function BrowseAPledge() {
   ];
   return (
     <React.Fragment>
-    <Header/>
+    {/* <Header/> */}
       <SafeAreaView>
         <View style={styles.container}>
           <View style={styles.pickerContainer}>
