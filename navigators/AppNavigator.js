@@ -26,6 +26,7 @@ import HomeScreen from "../screens/HomeScreen";
 import BrowseAPledge from "../screens/BrowseAPledge";
 import LoginScreen from "../screens/LoginScreen";
 import OptionsScreen from "../screens/OptionsScreen";
+import StartAPledge from "../screens/StartAPledge";
 import ScreenOne from "../screens/drawer/ScreenOne";
 import ScreenTwo from "../screens/drawer/ScreenTwo";
 import ScreenThree from "../screens/drawer/ScreenThree";
@@ -65,7 +66,6 @@ export default function AppNavigator() {
   const BottomTabOneContainer = ({ navigation }) => {
     return (
       <Drawer.Navigator
-        openByDefault="Homescreen"
         initialRouteName="Homescreen"
         drawerContent={(props) => <DrawerContent {...props} />}
         drawerPosition={"right"}
@@ -170,17 +170,17 @@ export default function AppNavigator() {
         />
         <BottomTab.Screen
           name="Start"
-          children={OptionsScreen}
+          component={StartAPledge}
           options={{ tabBarLabel: "Start a pledge" }}
         />
         <BottomTab.Screen
           name="Browse"
-          children={BrowseAPledge}
+          component={BrowseAPledge}
           options={{ tabBarLabel: "Browse a Pledge" }}
         />
         <BottomTab.Screen
           name="Notification"
-          children={OptionsScreen}
+          component={OptionsScreen}
           options={{ tabBarLabel: "Notifications" }}
         />
         <BottomTab.Screen

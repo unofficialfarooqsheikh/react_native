@@ -121,15 +121,6 @@ export default function HomeScreen({ navigation }) {
   const FundRaiseSlider = [{ Progress: "0.8" }];
   return (
     <ScrollView style={{ flex: 1 , backgroundColor:"#DCDCDC"}}>
-    <View style={{width:"20%"}}>
-      <List.AccordionGroup style={{width:"20%"}}>
-        <List.Accordion title="$" id="1" >
-          <List.Item title="$" onPress={(props)=>{}} />
-          <List.Item title="₹" onPress={()=>{}}/>
-          <List.Item title="¢" onPress={()=>{}}/>
-        </List.Accordion>
-      </List.AccordionGroup>
-    </View>
 
       {/* Temporary slider box which would be replaced by customer slider box */}
       

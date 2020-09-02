@@ -1,48 +1,148 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import {Picker} from '@react-native-community/picker';
-import { List } from 'react-native-paper';
+import {
+  StyleSheet,
+  FlatList,
+  Image,
+  Dimensions,
+  SafeAreaView,
+} from "react-native";
+import {
+  Container,
+  Header,
+  View,
+  DeckSwiper,
+  Card,
+  CardItem,
+  Thumbnail,
+  Text,
+  Left,
+  Body,
+  Icon,
+  Picker
+} from "native-base";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
+const { width, height } = Dimensions.get("window");
 import axios from "axios";
-import { log } from "react-native-reanimated";
 
 export default function BrowseAPledge() {
-  const [data, setData] = useState("");
+  const [category, setCategory] = useState([]);
+  const [catselect, setCatselect] = useState("0");
 
-//   useEffect(() => {
-//     axios
-//       .get("https://feapi.offsetnow.com/api/admin/GetCategories")
-//       .then((response) => {
-//         const temp = response.data;
-//         console.log("Initial data", temp);
-//         // setData(temp)
-//       })
-//       .catch((error) => {
-//         alert(error);
-//       });
-//   }, []);
-  const [selectedValue, setSelectedValue] = useState("py");
+  const seperator = () => {
+    return;
+  };
+
+  useEffect(() => {
+    axios
+      .get("https://feapi.offsetnow.com/api/admin/GetCategories")
+      .then((response) => {
+        const temp = response.data.objresult;
+        // console.log("Initial data",temp)
+        setCategory([...temp]);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+  // console.log("DATA S",setCategory,"DATA E")
+  const cards = [
+    {
+      text: "Card One",
+      name: "One",
+      image: "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
+    },
+    {
+      text: "Card two",
+      name: "two",
+      image: "https://feapi.offsetnow.com/CampaignImages/f48db8f2-da59-4754-8c21-d0cef320536d.jpg",
+    },
+    {
+      text: "Card three",
+      name: "three",
+      image: "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
+    },
+    {
+      text: "Card Four",
+      name: "Four",
+      image: "https://offsetnow.com/fun-fact-bg.jpg",
+    },
+  ];
   return (
-    <View style={styles.container}>
-      <List.AccordionGroup style={{width:"100%"}} >
-        <List.Accordion title="python" id="1" >
-          <List.Item title="JavaScript" onPress={(props)=>{}} />
-          <List.Item title="Js" onPress={()=>{}}/>
-          <List.Item title="python" onPress={()=>{}}/>
-        </List.Accordion>
-      </List.AccordionGroup>
-    </View>
+    <React.Fragment>
+    <Header/>
+      <SafeAreaView>
+        <View style={styles.container}>
+          <View style={styles.pickerContainer}>
+            <Picker
+              note
+              mode="dropdown"
+              style={{ width: wp("50%") }}
+              selectedValue={catselect}
+              onValueChange={(value) => {
+                setCatselect(value);
+              }}
+            >
+              <Picker.Item key={"Default"} label={"All Categories"} value={"0"} />
+              {category.map((item, index) => {
+                return (
+                  <Picker.Item
+                    key={index}
+                    label={item.CategoryName}
+                    value={item.CategoryId}
+                  />
+                );
+              })}
+            </Picker>
+          </View>
+        </View>
+      </SafeAreaView>
+      <View style={{marginTop:hp("15%")}}>
+          <View>
+            <DeckSwiper
+              dataSource={cards}
+              renderItem={(item) => (
+                <Card style={{ elevation: 3 }}>
+                  <CardItem>
+                    <Left>
+                      <Thumbnail source={{ uri: item.image }} />
+                      <Body>
+                        <Text>{item.text}</Text>
+                        <Text note>Text notes</Text>
+                      </Body>
+                    </Left>
+                  </CardItem>
+                  <CardItem cardBody>
+                    <Image
+                      style={{ height: 300, flex: 1 }}
+                      source={{ uri: item.image }}
+                    />
+                  </CardItem>
+                  <CardItem>
+                    <Icon type="AntDesign" name="like2" style={{ color: "#ED4A6A" }} />
+                    <Text>{item.name}</Text>
+                  </CardItem>
+                </Card>
+              )}
+            />
+          </View>
+      </View>
+    </React.Fragment>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: "10%",
-    padding: "10%",
-    backgroundColor: "#fff",
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
-    textAlign: "justify",
+  },
+  pickerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: "10%",
   },
   seperator: {
     borderBottomWidth: 2,

@@ -1,27 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList,Dimensions } from "react-native";
+import { Container, Header, Content, Picker, Form } from "native-base";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
+const { width, height } = Dimensions.get("window");
 import axios from "axios";
 
 export default function ScreenTwo() {
-  // const [data, setData] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [catselect, setCatselect] = useState("32");
 
   useEffect((() => {
     axios
       .get("https://feapi.offsetnow.com/api/admin/GetCategories")
       .then((response) => {
-        const temp =response.data
+        const temp =response.data.objresult
         console.log("Initial data",temp)
-        // setData(temp)
+        setCategory([...temp])
       })
       .catch((error) => {
         alert(error);
       });
   }),[]);
+  console.log("DATA S",setCategory,"DATA E")
   return (
     <View style={styles.container}>
-      <Text>Start</Text>
-
-      <Text>End</Text>
+      <View style={styles.pickerContainer}>
+        <Picker
+                note
+                mode="dropdown"
+                style={{ width: 120 }}
+                selectedValue={catselect}
+                onValueChange={(value)=>{setCatselect(value)}}
+              >
+              {
+                category.map((item,index)=>{
+                  console.log("*******",item,"*********")
+                  return <Picker.Item key={index+"gaaaand"} label={item.CategoryName} value={item.CategoryId} />
+                })
+              }
+              </Picker>
+      </View>
     </View>
   );
 }
@@ -29,12 +50,9 @@ export default function ScreenTwo() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: "10%",
-    padding: "10%",
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "space-between",
-    textAlign: "justify",
+  },
+  pickerContainer:{
+    marginTop:"10%",
   },
   seperator:{
     borderBottomWidth:2,

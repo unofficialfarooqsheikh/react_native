@@ -10,26 +10,26 @@ export default function App() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   // function to get the loaction
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert("Hold on!", "Are you sure you want to go back?", [
-        {
-          text: "Cancel",
-          onPress: () => null,
-          style: "cancel"
-        },
-        { text: "YES", onPress: () => BackHandler.exitApp() }
-      ]);
-      return true;
-    };
+  // useEffect(() => {
+  //   const backAction = () => {
+  //     Alert.alert("Hold on!", "Are you sure you want to go back?", [
+  //       {
+  //         text: "Cancel",
+  //         onPress: () => null,
+  //         style: "cancel"
+  //       },
+  //       { text: "YES", onPress: () => BackHandler.exitApp() }
+  //     ]);
+  //     return true;
+  //   };
 
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction()
-    );
+  //   const backHandler = BackHandler.addEventListener(
+  //     "hardwareBackPress",
+  //     backAction()
+  //   );
 
-    return () => backHandler.remove();
-  }, []);
+  //   return () => backHandler.remove();
+  // }, []);
 
   useEffect(() => {
     (async () => {
@@ -38,7 +38,7 @@ export default function App() {
         alert("The request was denied");
       } else {
         try {
-          alert(status);
+          // alert(status);
           let location = await Location.getCurrentPositionAsync({});
           //alert("location permission Granted")
           // console.log(location)
