@@ -8,7 +8,8 @@ import {
   Button,
   TouchableOpacity,
   Dimensions,
-  Switch
+  Switch,
+  ScrollView,
 } from "react-native";
 
 import {
@@ -18,7 +19,6 @@ import {
 const { width, height } = Dimensions.get("window");
 
 import colors from "../constants/colors";
-import { color } from "react-native-reanimated";
 
 export default function SignUpScreen({ navigation }) {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -36,6 +36,7 @@ export default function SignUpScreen({ navigation }) {
         />
       </View>
       <Text style = {styles.title}>Welcome!</Text>
+      <ScrollView>
       <View style = {styles.form}>
       <View style = { styles.nameInput}>
         <Text style = {styles.nameText}>Name</Text>
@@ -64,8 +65,18 @@ export default function SignUpScreen({ navigation }) {
           />
         <Text></Text>
         </View>
-        <View style = {styles.passwordInput}>
+        <View style = {styles.mobileInput}>
         <Text style = {styles.passwordText}>Password</Text>
+          <TextInput
+            style = {{marginTop: 20}} 
+            placeholder="Password"
+            style={styles.textInput}
+            secureTextEntry={true}
+          />
+          <Text></Text>
+        </View>
+        <View style = {styles.passwordInput}>
+        <Text style = {styles.passwordText}>Confirm Password</Text>
           <TextInput
             style = {{marginTop: 20}} 
             placeholder="Password"
@@ -77,11 +88,12 @@ export default function SignUpScreen({ navigation }) {
           <View>
           <TouchableOpacity activeOpacity={0.6}>
             <View style = {styles.button}>
-              <Text style = { styles.buttonText}>Sign In</Text>
+              <Text style = { styles.buttonText}>Sign Up</Text>
             </View>
           </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
     </View>
   );
 }
