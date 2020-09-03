@@ -82,7 +82,7 @@ export default function LoginScreen({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style = {styles.signIn}>
-          <Text style = {{    fontFamily: 'lato',}}>Haven't signed up yet?</Text>
+          <Text style = {{fontFamily: 'lato', fontSize: 20}}>Haven't signed up yet?</Text>
           <TouchableOpacity activeOpacity={0.6}>
               <Text style = {styles.createText}
                 onPress = {() => {navigation.navigate('signup')}}

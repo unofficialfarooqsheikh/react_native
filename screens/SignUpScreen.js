@@ -1,86 +1,86 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   Image,
   TextInput,
   View,
-  ScrollView,
   Button,
   TouchableOpacity,
+  Dimensions,
+  Switch
 } from "react-native";
 
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
+const { width, height } = Dimensions.get("window");
+
 import colors from "../constants/colors";
+import { color } from "react-native-reanimated";
 
 export default function SignUpScreen({ navigation }) {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  console.log(navigation);
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View>
         <Image
-          style={{ width: 200, height: 80 }}
+          style={{ width: 200, height: 80, alignSelf: "center" }}
           resizeMode="contain"
           source={{
             uri: "https://offsetnow.com/assets/Offset_Logo_2.png",
           }}
         />
       </View>
-      <View style={styles.footer}>
-      <ScrollView>
-        <Text style={styles.textFooter}>Name</Text>
-          <View style={styles.action}>
-            <TextInput
-              placeholder="Your name"
-              style={styles.textInput}
-              autoCapitalize="none"
-            />
-          </View>
-          <Text style={[styles.textFooter, { marginTop: 30 }]}>Email</Text>
-          <View style={styles.action}>
-            <TextInput
-              placeholder="Your email"
-              style={styles.textInput}
-              autoCapitalize="none"
-            />
-          </View>
-          <Text style={[styles.textFooter, { marginTop: 30 }]}>Mobile No.</Text>
-          <View style={styles.action}>
-            <TextInput
-              placeholder="Mobile number"
-              style={styles.textInput}
-              autoCapitalize="none"
-            />
-          </View>
-          <Text style={[styles.text_footer, { marginTop: 30 }]}>Password</Text>
-          <View style={styles.action}>
-            <TextInput
-              placeholder="Set password"
-              style={styles.textInput}
-              secureTextEntry={true}
-            />
-          </View>
-          <Text style={[styles.text_footer, { marginTop: 30 }]}>Confirm password</Text>
-          <View style={styles.action}>
-            <TextInput
-              placeholder="confirm password"
-              style={styles.textInput}
-              secureTextEntry={true}
-            />
-          </View>
-          <View style={[styles.signUp, { justifyContent: "space-between" }]}>
-            <TouchableOpacity activeOpacity={0.6}>
-              <View style={styles.button}>
-                  <Text style={styles.buttonText}>Sign Up</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.6}>
-            <View style={styles.button}>
-                  <Text style={styles.buttonText}
-                    onPress = {() => {navigation.goBack()}}
-                  >Back</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+      <Text style = {styles.title}>Welcome!</Text>
+      <View style = {styles.form}>
+      <View style = { styles.nameInput}>
+        <Text style = {styles.nameText}>Name</Text>
+          <TextInput style = {styles.passwordText}
+            placeholder="Name"
+            style={styles.textInput}
+            autoCapitalize="none"
+          />
+        <Text></Text>
+        </View>
+        <View style = { styles.emailInput}>
+        <Text style = {styles.EmailText}>Email</Text>
+          <TextInput style = {styles.passwordText}
+            placeholder="Email"
+            style={styles.textInput}
+            autoCapitalize="none"
+          />
+        <Text></Text>
+        </View>
+        <View style = { styles.mobileInput}>
+        <Text style = {styles.EmailText}>Mobile number</Text>
+          <TextInput style = {styles.passwordText}
+            placeholder="Mobile number"
+            style={styles.textInput}
+            autoCapitalize="none"
+          />
+        <Text></Text>
+        </View>
+        <View style = {styles.passwordInput}>
+        <Text style = {styles.passwordText}>Password</Text>
+          <TextInput
+            style = {{marginTop: 20}} 
+            placeholder="Password"
+            style={styles.textInput}
+            secureTextEntry={true}
+          />
+          <Text></Text>
+        </View>
+          <View>
+          <TouchableOpacity activeOpacity={0.6}>
+            <View style = {styles.button}>
+              <Text style = { styles.buttonText}>Sign In</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -89,82 +89,106 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#21a984",
+    // backgroundColor: colors.background
   },
-  header: {
-    flex: 1,
-    justifyContent: "flex-end",
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    alignSelf: "center",
-    // paddingTop: 5,
+
+  title: {
+    textAlign: "center",
+    fontSize: 20,
   },
-  footer: {
-    marginTop: 5,
-    flex: 3,
+
+  form: {
+    alignItems: "center"
+  },
+
+  emailInput: {
+    paddingLeft: 20,
     backgroundColor: "#fff",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
+    width: wp('80%'),
+    borderStyle:'solid',
+    borderColor: "#eee",
+    borderWidth: 0.5,
+    borderTopColor: '#fff',
+
+  },
+  nameInput: {
+    paddingLeft: 20,
+    backgroundColor: "#fff",
+    width: wp('80%'),
+    marginTop: hp('2%'),
+    borderStyle:'solid',
+    borderColor: "#eee",
+    borderWidth: 0.5,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
   },
 
-  textInput: {
-    flex: 1,
-    paddingLeft: 10,
-    color: "#05375a",
-    fontSize: 12,
+  mobileInput: {
+    paddingLeft: 20,
+    backgroundColor: "#fff",
+    width: wp('80%'),
+    borderStyle:'solid',
+    borderColor: "#eee",
+    borderWidth: 0.5,
+    borderTopColor: '#fff',
   },
 
-  textFooter: {
-    paddingLeft: 6,
-    color: "#05375a",
+  nameText: {
     fontSize: 15,
+    marginTop: 10,
+    paddingVertical: 5
   },
 
-  action: {
-    flexDirection: "row",
-    marginTop: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#21a984",
-    paddingBottom: 5,
-  },
   button: {
-    backgroundColor: "#21a984",
-    width: 120,
+    borderRadius: 50,
+    margin: 30,
+    backgroundColor: '#75b79e',
+    width: wp('80%')
   },
 
   buttonText: {
-    paddingVertical: 10,
+    fontSize: 25,
+    paddingVertical: 20,
     alignItems: "center",
     color: "#fff",
     textAlign: 'center'
   },
-  forgotPassword: {
-    flex: 1,
-    alignSelf: "flex-end",
-    textAlign: "justify",
-  },
 
-  forgotPasswordText: {
+  EmailText: {
+    fontSize: 15,
     marginTop: 10,
-    textAlign: "right",
-    color: "#21a984",
+    marginBottom: 10,
+    paddingVertical: 5
   },
 
-  signUp: {
-    flexDirection: "row",
-    marginTop: 20,
-    marginBottom: 20,
+  passwordInput: {
+    paddingLeft: 20,
+    backgroundColor: "#fff",
+    width: wp('80%'),
+    borderStyle:'solid',
+    borderWidth: 0.5,
+    borderColor: "#eee",
+    borderTopColor: '#fff',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
 
-  signUpTest: {
-    color: "#21a984",
+  passwordText: {
+    fontSize: 15,
+    marginTop: 10,
+    marginBottom: 10,
+    paddingVertical: 5
+  },
+
+  signIn: {
+    flexDirection: 'row',
+  },
+
+  createText: {
+    fontFamily: 'lato',
+    fontSize: 20,
     paddingLeft: 10,
-  },
-
-  backText: {
-    alignItems: "center",
-    color: "#fff",
+    color: colors.primary
   }
+
 });
