@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,63 +7,86 @@ import {
   View,
   Button,
   TouchableOpacity,
+  Dimensions,
+  Switch
 } from "react-native";
+
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
+const { width, height } = Dimensions.get("window");
 
 import colors from "../constants/colors";
 import { color } from "react-native-reanimated";
 
 export default function LoginScreen({ navigation }) {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   console.log(navigation);
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View>
         <Image
-          style={{ width: 200, height: 80 }}
+          style={{ width: 200, height: 80, alignSelf: "center" }}
           resizeMode="contain"
           source={{
             uri: "https://offsetnow.com/assets/Offset_Logo_2.png",
           }}
         />
       </View>
-      <View >
-        <Text style={styles.textFooter}>Email</Text>
-        <View style={styles.action}>
-          <TextInput
+      <Text style = {styles.title}>Welcome!</Text>
+      <View style = {styles.form}>
+        <View style = { styles.emailInput}>
+        <Text style = {styles.EmailText}>Email</Text>
+          <TextInput style = {styles.passwordText}
             placeholder="Your email"
             style={styles.textInput}
             autoCapitalize="none"
           />
+        <Text></Text>
         </View>
-        <Text style={[styles.text_footer, { marginTop: 30 }]}>Password</Text>
-        <View style={styles.action}>
+        <View style = {styles.passwordInput}>
+        <Text style = {styles.passwordText}>Password</Text>
           <TextInput
+            style = {{marginTop: 20}} 
             placeholder="Password"
             style={styles.textInput}
             secureTextEntry={true}
           />
+          <Text></Text>
         </View>
-        <View style={[styles.signIn, { justifyContent: "space-between" }]}>
-          <TouchableOpacity activeOpacity={0.6} >
-            <View style={styles.button}>
-                <Text style={styles.buttonText}>Sign In</Text>
-            </View>
-          </TouchableOpacity>
+        <View>
           <TouchableOpacity activeOpacity={0.6}>
             <View>
-              <Text style={styles.forgotPasswordText}>Forgot password</Text>
+              <Text style = {[styles.title, {marginTop: 50, color: '#21a984'}]}>Forgot password ?</Text>
             </View>
           </TouchableOpacity>
         </View>
-        <View style={styles.signIn}>
-          <View>
-            <Text>New to Offsetnow?</Text>
+          <View style ={styles. signIn}>
+            <Text style = {[styles.title, {marginTop: 30}]}>Keep me signed in</Text>
+            <Switch
+              style = {[styles.title, {marginTop: 32, paddingLeft: 10}]}
+              trackColor={{ false: colors.secondary, true: colors.primary }}
+              thumbColor= '#fff'
+              // ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
           </View>
+          <View>
           <TouchableOpacity activeOpacity={0.6}>
-            <View>
-              <Text style={styles.signUpTest}
-                onPress = {() => {navigation.navigate('signup')}}
-              >Sign Up</Text>
+            <View style = {styles.button}>
+              <Text style = { styles.buttonText}>Sign In</Text>
             </View>
+          </TouchableOpacity>
+        </View>
+        <View style = {styles.signIn}>
+          <Text style = {{    fontFamily: 'lato',}}>Haven't signed up yet?</Text>
+          <TouchableOpacity activeOpacity={0.6}>
+              <Text style = {styles.createText}
+                onPress = {() => {navigation.navigate('signup')}}
+              >Create</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -74,78 +97,80 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#21a984",
+    // backgroundColor: colors.background
   },
-  header: {
-    flex: 1,
-    justifyContent: "flex-end",
-    paddingHorizontal: 20,
-    paddingBottom: 50,
-    alignSelf: "center",
-    paddingTop: 20,
+
+  title: {
+    textAlign: "center",
+    fontSize: 20,
   },
-  footer: {
-    marginTop: 5,
-    flex: 3,
+
+  form: {
+    alignItems: "center"
+  },
+
+  emailInput: {
+    paddingLeft: 20,
     backgroundColor: "#fff",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-  },
-
-  textInput: {
-    flex: 1,
-    paddingLeft: 10,
-    color: "#05375a",
-    fontSize: 12,
-  },
-
-  textFooter: {
-    paddingLeft: 6,
-    color: "#05375a",
-    fontSize: 15,
-  },
-
-  action: {
-    flexDirection: "row",
-    marginTop: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#21a984",
-    paddingBottom: 5,
+    width: wp('80%'),
+    marginTop: hp('2%'),
+    borderStyle:'solid',
+    borderColor: "#eee",
+    borderWidth: 0.5,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
   },
 
   button: {
-    backgroundColor: "#21a984",
-    width: 120,
+    borderRadius: 50,
+    margin: 30,
+    backgroundColor: '#75b79e',
+    width: wp('80%')
   },
 
   buttonText: {
-    paddingVertical: 10,
+    fontSize: 25,
+    paddingVertical: 20,
     alignItems: "center",
     color: "#fff",
     textAlign: 'center'
   },
-  forgotPassword: {
-    flex: 1,
-    alignSelf: "flex-end",
-    textAlign: "justify",
+
+  EmailText: {
+    fontSize: 15,
+    marginTop: 10,
+    marginBottom: 10,
+    paddingVertical: 5
   },
 
-  forgotPasswordText: {
+  passwordInput: {
+    paddingLeft: 20,
+    backgroundColor: "#fff",
+    width: wp('80%'),
+    borderStyle:'solid',
+    borderWidth: 0.5,
+    borderColor: "#eee",
+    borderTopColor: '#fff',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+
+  passwordText: {
+    fontSize: 15,
     marginTop: 10,
-    textAlign: "right",
-    color: "#21a984",
+    marginBottom: 10,
+    paddingVertical: 5
   },
 
   signIn: {
-    flexDirection: "row",
-    marginTop: 20,
-    marginBottom: 20,
+    flexDirection: 'row',
   },
 
-  signUpTest: {
-    color: "#21a984",
+  createText: {
+    fontFamily: 'lato',
+    fontSize: 20,
     paddingLeft: 10,
-  },
+    color: colors.primary
+  }
+
 });
