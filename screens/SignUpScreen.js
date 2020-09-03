@@ -89,18 +89,18 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#21a984",
+    // backgroundColor: "#21a984",
   },
   header: {
     flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
-    paddingBottom: 50,
+    paddingBottom: 20,
     alignSelf: "center",
-    paddingTop: 20,
+    // paddingTop: 5,
   },
   footer: {
-    marginTop: 50,
+    marginTop: 5,
     flex: 3,
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,

@@ -124,7 +124,7 @@ export default function HomeScreen({ navigation }) {
 
       {/* Temporary slider box which would be replaced by customer slider box */}
       
-      <SliderBox
+      {/* <SliderBox
         sliderBoxHeight={height / 3}
         circleLoop
         autoplay={true}
@@ -133,14 +133,14 @@ export default function HomeScreen({ navigation }) {
         images={ImageList}
         dotColor="#FFEE58"
         inactiveDotColor="#90A4AE"
-      />
+      /> */}
      
       {/* return No of cards as much as length of data in DataList */}
-      <View>
+      {/* <View>
         {DataList.map((item, index) => {
           return <CardsComponent key={index} data={item} />;
         })}
-      </View>
+      </View> */}
       {/* Causes div */}
       <View style={styles.TextView}>
         <Text style={styles.TextSectionHeader}>Top causes</Text>

@@ -74,7 +74,7 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#21a984",
+    // backgroundColor: "#21a984",
   },
   header: {
     flex: 1,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   footer: {
-    marginTop: 50,
+    marginTop: 5,
     flex: 3,
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,
