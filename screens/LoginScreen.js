@@ -25,7 +25,7 @@ export default function LoginScreen({ navigation }) {
           }}
         />
       </View>
-      <View style={styles.footer}>
+      <View >
         <Text style={styles.textFooter}>Email</Text>
         <View style={styles.action}>
           <TextInput
