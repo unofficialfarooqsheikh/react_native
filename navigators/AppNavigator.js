@@ -40,7 +40,80 @@ import colors from "../constants/colors";
 const { width, height } = Dimensions.get("window");
 // just to get idea of the height and width of the device
 console.log(height, width);
+import {AuthContext} from '../components/Context';
+
 export default function AppNavigator() {
+ const [isLoading,setIsloading] =useState(true);
+const [userToken,SetUserToken] = useState(null);
+
+useEffect(()=>{
+  setTimeout(()=>{
+    dispatch({type:'REGISTER',token:'adf'})
+  })
+})
+
+const initialLoginState = {
+  isLoading:true,
+  userName:null,
+  userToken:null,
+};
+
+const loginReducer = (prevState,action) =>{
+  switch(action.type){
+    case 'RETRIEVE_TOKEN':
+      return {
+        ...prevState,
+        userToken:action.token,
+        isLoading:false
+      };
+      case 'LOGIN':
+      return {
+        ...prevState,
+        userName:action.id,
+        userToken:action.token,
+        isLoading:false
+
+      }; 
+      case 'LOGOUT':
+      return {
+        ...prevState,
+        userName:null,
+        userToken:null,
+        isLoading:false
+      }; 
+      case 'SIGNUP':
+      return {
+        ...prevState,
+        userName:action.id,
+        userToken:action.token,
+        isLoading:false
+      }; 
+  }
+}
+
+
+const [loginState,dispatch] = React.useReducer(loginReducer,initialLoginState)
+const authContext =React.useMemo(()=>({
+  signIn : (userName,password) =>{
+    // SetUserToken('ISValid');
+    // setIsloading(false);
+    let userToken;
+    userName=null;
+    if(userName=='user' && password=='pass'){
+      userToken='LoginAcces'
+    }
+    dispatch({type:'LOGIN',id:userName,token:userToken})
+  },
+  SingOut: () =>{
+    SetUserToken(null);
+    setIsloading(false);
+
+  },
+  SignUp:()=>{
+    SetUserToken('ISValid');
+    setIsloading(false);
+  }
+}))
   //      *******************Navigation Mapping******************************
   //      BottomNavigator -> screen A,B
   //          screen A -> DrawerNavigator
@@ -68,7 +141,7 @@ export default function AppNavigator() {
       <Drawer.Navigator
         initialRouteName="Homescreen"
         drawerContent={(props) => <DrawerContent {...props} />}
-        drawerPosition={"right"}
+        drawerPosition={"left"}
       >
         <Drawer.Screen name="Homescreen" children={createMainStack} />
         <Drawer.Screen name="Profile" children={ScreenOne} />
@@ -193,9 +266,12 @@ export default function AppNavigator() {
   };
 
   return (
-    <NavigationContainer>
+    <AuthContext.Provider value={authContext}>
+    {/* <NavigationContainer>
       <CreateBottomTab />
-    </NavigationContainer>
+    </NavigationContainer> */}
+    <LoginScreen/>
+    </AuthContext.Provider>
   );
   
 }

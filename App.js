@@ -20,11 +20,12 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== "granted") {
-        alert("The request was denied");
+       // alert("The request was denied");
       } else {
         try {
           // alert(status);
@@ -81,5 +82,9 @@ export default function App() {
 
   
 
-  return <AppNavigator />;
+  return (
+    
+        <AppNavigator  />
+  
+  );
 }

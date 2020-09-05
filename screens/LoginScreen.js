@@ -21,12 +21,15 @@ const { width, height } = Dimensions.get("window");
 import colors from "../constants/colors";
 import { color } from "react-native-reanimated";
 import { ScrollView } from "react-native-gesture-handler";
-
+import {AuthContext} from "../components/Context";
 export default function LoginScreen({ navigation }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const [hidePass, setHidePass] = useState(true);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   console.log(navigation);
+
+  const  {signIn} = React.useContext(AuthContext); 
+
   return (
     <View style={styles.container}>
       <View>
@@ -97,7 +100,9 @@ export default function LoginScreen({ navigation }) {
             />
           </View>
           <View>
-            <TouchableOpacity activeOpacity={0.6}>
+            <TouchableOpacity activeOpacity={0.6}
+              onPress={()=>{signIn()}}
+            >
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Sign In</Text>
               </View>
