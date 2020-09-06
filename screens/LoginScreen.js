@@ -24,11 +24,12 @@ import colors from "../constants/colors";
 import { color } from "react-native-reanimated";
 import { ScrollView } from "react-native-gesture-handler";
 import {AuthContext} from "../components/Context";
-export default function LoginScreen({ navigation }) {
+
+export default function LoginScreen({ navigation  }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const [hidePass, setHidePass] = useState(true);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  // console.log(navigation);
+  console.log("****************" + navigation);
 
   const [loginForm, setLoginForm] = useState({
     email: '',
@@ -49,16 +50,7 @@ export default function LoginScreen({ navigation }) {
     });
   }
 
-  const login = ((val) => {
-    const url = 'https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=' +val.email +'&password=' + val.password;
-    axios.get(url).then((response) => {
-        const temp = response.data;
-        console.log("login response",temp)
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  });
+ 
 
   const  {signIn} = React.useContext(AuthContext); 
 
@@ -135,11 +127,11 @@ export default function LoginScreen({ navigation }) {
           </View>
           <View>
             <TouchableOpacity activeOpacity={0.6}
-              onPress={()=>{signIn()}}
+              onPress={()=>{signIn(loginForm)}}
             >
               <View style={styles.button}>
                 <Text style={styles.buttonText}
-                  onPress = {() => login(loginForm)}
+                  // onPress = {() => login(loginForm)}
                 >Sign In</Text>
               </View>
             </TouchableOpacity>

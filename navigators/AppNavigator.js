@@ -92,17 +92,31 @@ const loginReducer = (prevState,action) =>{
 }
 
 
+
 const [loginState,dispatch] = React.useReducer(loginReducer,initialLoginState)
 const authContext =React.useMemo(()=>({
-  signIn : (userName,password) =>{
+  signIn : (userData) =>{
     // SetUserToken('ISValid');
     // setIsloading(false);
-    let userToken;
-    userName=null;
-    if(userName=='user' && password=='pass'){
-      userToken='LoginAcces'
+    console.log(userData.email)
+    const login = ((userData) => {
+      const url = 'https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=' +userData.email +'&password=' + userData.password;
+      axios.get(url).then((response) => {
+          const temp = response.data;
+         console.log("login response",temp)
+         SetUserToken("iih")
+        })
+        .catch((error) => {
+          alert(error);
+
+        });
+    });
+   
+    if(userData.email=='user' && userData.password=='pass'){
+      SetUserToken("iih")
     }
-    dispatch({type:'LOGIN',id:userName,token:userToken})
+    console.log("################################s")
+    dispatch({type:'LOGIN',id:userData.email,token:userToken})
   },
   SingOut: () =>{
     SetUserToken(null);
@@ -115,6 +129,7 @@ const authContext =React.useMemo(()=>({
   }
 }))
 
+ 
 
   //      *******************Navigation Mapping******************************
   //      BottomNavigator -> screen A,B
@@ -269,10 +284,14 @@ const authContext =React.useMemo(()=>({
 
   return (
     <AuthContext.Provider value={authContext}>
+      {userToken!= null ?<NavigationContainer>
+      <CreateBottomTab />
+    </NavigationContainer>  :<LoginScreen/>
+      }
     {/* <NavigationContainer>
       <CreateBottomTab />
     </NavigationContainer> */}
-    <LoginScreen/>
+    
     </AuthContext.Provider>
   );
   
