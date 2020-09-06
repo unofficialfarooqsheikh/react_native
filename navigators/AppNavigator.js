@@ -114,6 +114,8 @@ const authContext =React.useMemo(()=>({
     setIsloading(false);
   }
 }))
+
+
   //      *******************Navigation Mapping******************************
   //      BottomNavigator -> screen A,B
   //          screen A -> DrawerNavigator

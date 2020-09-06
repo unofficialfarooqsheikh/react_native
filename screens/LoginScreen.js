@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import {
   StyleSheet,
   Text,
@@ -26,7 +28,37 @@ export default function LoginScreen({ navigation }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const [hidePass, setHidePass] = useState(true);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  console.log(navigation);
+  // console.log(navigation);
+
+  const [loginForm, setLoginForm] = useState({
+    email: '',
+    password: '',
+  })
+
+  const setEmail = (val) => {
+    setLoginForm({
+      ...loginForm,
+      email: val
+    });
+  }
+
+  const setPassword = (val) => {
+    setLoginForm({ 
+      ...loginForm,
+      password: val
+    });
+  }
+
+  const login = ((val) => {
+    const url = 'https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=' +val.email +'&password=' + val.password;
+    axios.get(url).then((response) => {
+        const temp = response.data;
+        console.log("login response",temp)
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  });
 
   const  {signIn} = React.useContext(AuthContext); 
 
@@ -51,6 +83,7 @@ export default function LoginScreen({ navigation }) {
               placeholder="Your email"
               style={styles.textInput}
               autoCapitalize="none"
+              onChangeText = {(val) => setEmail(val)}
             />
             <Text></Text>
           </View>
@@ -62,6 +95,7 @@ export default function LoginScreen({ navigation }) {
                 placeholder="Password"
                 style={styles.textInput}
                 secureTextEntry={hidePass}
+                onChangeText = {(val) => setPassword(val)}
               />
               <TouchableOpacity
                 onPress={() => {
@@ -104,7 +138,9 @@ export default function LoginScreen({ navigation }) {
               onPress={()=>{signIn()}}
             >
               <View style={styles.button}>
-                <Text style={styles.buttonText}>Sign In</Text>
+                <Text style={styles.buttonText}
+                  onPress = {() => login(loginForm)}
+                >Sign In</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -171,7 +207,6 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: colors.background
   },
   title: {
     textAlign: "center",

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 import {
   StyleSheet,
   Text,
@@ -23,6 +25,48 @@ import colors from "../constants/colors";
 export default function SignUpScreen({ navigation }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [signUpForm, setsignUpForm] = useState({
+    name: '',
+    email: '',
+    mobileNumber: '',
+    password: '',
+  })
+  const setName = (val) => {
+    setLoginForm({ 
+      ...loginForm,
+      name: val
+    });
+  }
+  const setEmail = (val) => {
+    setLoginForm({
+      ...loginForm,
+      email: val
+    });
+  }
+  const setNumber = (val) => {
+    setLoginForm({ 
+      ...loginForm,
+      mobileNumber: val
+    });
+  }
+  const setPassword = (val) => {
+    setLoginForm({ 
+      ...loginForm,
+      password: val
+    });
+  }
+
+  const signUp = ((data) => {
+    const url = 'https://feapi.offsetnow.com/api/admin/SignUp'
+    axios.post(url,data).then((response) => {
+        const temp = response.data;
+        console.log("login response",temp)
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  });
+
   console.log(navigation);
   return (
     <View style={styles.container}>
@@ -44,6 +88,7 @@ export default function SignUpScreen({ navigation }) {
             placeholder="Name"
             style={styles.textInput}
             autoCapitalize="none"
+            onChangeText = {(val) => setName(val)}
           />
         <Text></Text>
         </View>
@@ -53,6 +98,7 @@ export default function SignUpScreen({ navigation }) {
             placeholder="Email"
             style={styles.textInput}
             autoCapitalize="none"
+            onChangeText = {(val) => setEmail(val)}
           />
         <Text></Text>
         </View>
@@ -62,6 +108,7 @@ export default function SignUpScreen({ navigation }) {
             placeholder="Mobile number"
             style={styles.textInput}
             autoCapitalize="none"
+            onChangeText = {(val) => setNumber(val)}
           />
         <Text></Text>
         </View>
@@ -72,6 +119,7 @@ export default function SignUpScreen({ navigation }) {
             placeholder="Password"
             style={styles.textInput}
             secureTextEntry={true}
+            onChangeText = {(val) => setPassword(val)}
           />
           <Text></Text>
         </View>
@@ -88,7 +136,9 @@ export default function SignUpScreen({ navigation }) {
           <View>
           <TouchableOpacity activeOpacity={0.6}>
             <View style = {styles.button}>
-              <Text style = { styles.buttonText}>Sign Up</Text>
+              <Text style = { styles.buttonText}
+                onPress = {() => signUp(signUpForm)}
+              >Sign Up</Text>
             </View>
           </TouchableOpacity>
         </View>
