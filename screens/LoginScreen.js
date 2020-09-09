@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Switch,
+  SafeAreaView
 } from "react-native";
 import { Icon } from "native-base";
 
@@ -199,6 +200,7 @@ export default function LoginScreen({ navigation  }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop:hp('7%'),
   },
   title: {
     textAlign: "center",

@@ -40,96 +40,98 @@ import colors from "../constants/colors";
 const { width, height } = Dimensions.get("window");
 // just to get idea of the height and width of the device
 console.log(height, width);
-import {AuthContext} from '../components/Context';
+import { AuthContext } from "../components/Context";
 
 export default function AppNavigator() {
- const [isLoading,setIsloading] =useState(true);
-const [userToken,SetUserToken] = useState(null);
+  const [isLoading, setIsloading] = useState(true);
+  const [userToken, SetUserToken] = useState(null);
 
-useEffect(()=>{
-  setTimeout(()=>{
-    dispatch({type:'REGISTER',token:'adf'})
-  })
-})
-
-const initialLoginState = {
-  isLoading:true,
-  userName:null,
-  userToken:null,
-};
-
-const loginReducer = (prevState,action) =>{
-  switch(action.type){
-    case 'RETRIEVE_TOKEN':
-      return {
-        ...prevState,
-        userToken:action.token,
-        isLoading:false
-      };
-      case 'LOGIN':
-      return {
-        ...prevState,
-        userName:action.id,
-        userToken:action.token,
-        isLoading:false
-
-      }; 
-      case 'LOGOUT':
-      return {
-        ...prevState,
-        userName:null,
-        userToken:null,
-        isLoading:false
-      }; 
-      case 'SIGNUP':
-      return {
-        ...prevState,
-        userName:action.id,
-        userToken:action.token,
-        isLoading:false
-      }; 
-  }
-}
-
-
-
-const [loginState,dispatch] = React.useReducer(loginReducer,initialLoginState)
-const authContext =React.useMemo(()=>({
-  signIn : (userData) =>{
-    // SetUserToken('ISValid');
-    // setIsloading(false);
-    console.log(userData.email)
-    const login = ((userData) => {
-      const url = 'https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=' +userData.email +'&password=' + userData.password;
-      axios.get(url).then((response) => {
-          const temp = response.data;
-         console.log("login response",temp)
-         SetUserToken("iih")
-        })
-        .catch((error) => {
-          alert(error);
-
-        });
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch({ type: "REGISTER", token: "adf" });
     });
-   
-    if(userData.email=='user' && userData.password=='pass'){
-      SetUserToken("iih")
+  });
+
+  const initialLoginState = {
+    isLoading: true,
+    userName: null,
+    userToken: null,
+  };
+
+  const loginReducer = (prevState, action) => {
+    switch (action.type) {
+      case "RETRIEVE_TOKEN":
+        return {
+          ...prevState,
+          userToken: action.token,
+          isLoading: false,
+        };
+      case "LOGIN":
+        return {
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
+      case "LOGOUT":
+        return {
+          ...prevState,
+          userName: null,
+          userToken: null,
+          isLoading: false,
+        };
+      case "SIGNUP":
+        return {
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
     }
-    console.log("################################s")
-    dispatch({type:'LOGIN',id:userData.email,token:userToken})
-  },
-  SingOut: () =>{
-    SetUserToken(null);
-    setIsloading(false);
+  };
 
-  },
-  SignUp:()=>{
-    SetUserToken('ISValid');
-    setIsloading(false);
-  }
-}))
+  const [loginState, dispatch] = React.useReducer(
+    loginReducer,
+    initialLoginState
+  );
+  const authContext = React.useMemo(() => ({
+    signIn: (userData) => {
+      // SetUserToken('ISValid');
+      // setIsloading(false);
+      console.log(userData.email);
+      const login = (userData) => {
+        const url =
+          "https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=" +
+          userData.email +
+          "&password=" +
+          userData.password;
+        axios
+          .get(url)
+          .then((response) => {
+            const temp = response.data;
+            console.log("login response", temp);
+            SetUserToken("iih");
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      };
 
- 
+      if (userData.email == "user" && userData.password == "pass") {
+        SetUserToken("iih");
+      }
+      console.log("################################s");
+      dispatch({ type: "LOGIN", id: userData.email, token: userToken });
+    },
+    SingOut: () => {
+      SetUserToken(null);
+      setIsloading(false);
+    },
+    SignUp: () => {
+      SetUserToken("ISValid");
+      setIsloading(false);
+    },
+  }));
 
   //      *******************Navigation Mapping******************************
   //      BottomNavigator -> screen A,B
@@ -168,10 +170,10 @@ const authContext =React.useMemo(()=>({
     );
   };
   //creating the login stack
-  const loginStack = () => {
+  const CreateLoginStack = (navigation) => {
     return (
-      <LoginStack.Navigator>
-        <LoginStack.Screen name="login" component={LoginScreen} />
+      <LoginStack.Navigator >
+        <LoginStack.Screen name="login" component={LoginScreen} options={{headerShown: false}}/>
         <LoginStack.Screen name="signup" component={SignUpScreen} />
       </LoginStack.Navigator>
     );
@@ -284,15 +286,18 @@ const authContext =React.useMemo(()=>({
 
   return (
     <AuthContext.Provider value={authContext}>
-      {userToken!= null ?<NavigationContainer>
-      <CreateBottomTab />
-    </NavigationContainer>  :<LoginScreen/>
-      }
-    {/* <NavigationContainer>
+      {userToken != null ? (
+        <NavigationContainer>
+          <CreateBottomTab />
+        </NavigationContainer>
+      ) : (
+        <NavigationContainer>
+          <CreateLoginStack />
+        </NavigationContainer>
+      )}
+      {/* <NavigationContainer>
       <CreateBottomTab />
     </NavigationContainer> */}
-    
     </AuthContext.Provider>
   );
-  
 }
