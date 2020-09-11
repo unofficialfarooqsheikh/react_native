@@ -41,7 +41,7 @@ const { width, height } = Dimensions.get("window");
 // just to get idea of the height and width of the device
 console.log(height, width);
 import { AuthContext } from "../components/Context";
-
+import axios from 'axios';
 export default function AppNavigator() {
   const [isLoading, setIsloading] = useState(true);
   const [userToken, SetUserToken] = useState(null);
@@ -58,6 +58,10 @@ export default function AppNavigator() {
     userToken: null,
   };
 
+ 
+
+ 
+
   const loginReducer = (prevState, action) => {
     switch (action.type) {
       case "RETRIEVE_TOKEN":
@@ -66,6 +70,7 @@ export default function AppNavigator() {
           userToken: action.token,
           isLoading: false,
         };
+        break;
       case "LOGIN":
         return {
           ...prevState,
@@ -73,6 +78,8 @@ export default function AppNavigator() {
           userToken: action.token,
           isLoading: false,
         };
+        console.log(userToken +  "   UserToken Genreated")
+        break;
       case "LOGOUT":
         return {
           ...prevState,
@@ -80,6 +87,7 @@ export default function AppNavigator() {
           userToken: null,
           isLoading: false,
         };
+        break;
       case "SIGNUP":
         return {
           ...prevState,
@@ -87,9 +95,9 @@ export default function AppNavigator() {
           userToken: action.token,
           isLoading: false,
         };
+        break;
     }
   };
-
   const [loginState, dispatch] = React.useReducer(
     loginReducer,
     initialLoginState
@@ -100,13 +108,8 @@ export default function AppNavigator() {
       // setIsloading(false);
       console.log(userData.email);
       const login = (userData) => {
-        const url =
-          "https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=" +
-          userData.email +
-          "&password=" +
-          userData.password;
-        axios
-          .get(url)
+        const url ="https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=" +userData.email +"&password=" +userData.password;
+        axios.get(url)
           .then((response) => {
             const temp = response.data;
             console.log("login response", temp);
@@ -115,21 +118,57 @@ export default function AppNavigator() {
           .catch((error) => {
             alert(error);
           });
+          
       };
 
       if (userData.email == "user" && userData.password == "pass") {
         SetUserToken("iih");
-      }
-      console.log("################################s");
+        alert("tokenset");
+        console.log("################################s" + userData.email);
       dispatch({ type: "LOGIN", id: userData.email, token: userToken });
+      }
+      
     },
     SingOut: () => {
       SetUserToken(null);
       setIsloading(false);
     },
-    SignUp: () => {
-      SetUserToken("ISValid");
-      setIsloading(false);
+    SignUp: (data) => {
+      // SetUserToken("ISValid");
+      // setIsloading(false);
+      console.log("signupHit")
+      console.log(data)
+      const url = 'https://feapi.offsetnow.com/api/admin/SignUp';
+      axios.post(url,data).then((response) => {
+          const temp = response.data;
+          console.log("login response",temp)
+          alert("signup Success");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    //   const requestOptions = {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: data
+    // };
+    // fetch(url, requestOptions)
+    //     .then(async response => {
+    //         const data = await response.json();
+
+    //         // check for error response
+    //         if (!response.ok) {
+    //             // get error message from body or default to response status
+    //             const error = (data && data.message) || response.status;
+    //             return Promise.reject(error);
+    //         }
+
+    //         this.setState({ postId: data.id })
+    //     })
+    //     .catch(error => {
+    //         this.setState({ errorMessage: error.toString() });
+    //         console.error('There was an error!', error);
+    //     });
     },
   }));
 
@@ -277,7 +316,7 @@ export default function AppNavigator() {
         />
         <BottomTab.Screen
           name="Login"
-          children={loginStack}
+          children={CreateLoginStack}
           options={{ tabBarLabel: "Login" }}
         />
       </BottomTab.Navigator>

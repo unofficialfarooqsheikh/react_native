@@ -21,52 +21,56 @@ import {
 const { width, height } = Dimensions.get("window");
 
 import colors from "../constants/colors";
-
+import {AuthContext} from "../components/Context";
 export default function SignUpScreen({ navigation }) {
+  var RandomNumber =Math.floor(100000 + Math.random() * 900000) + 1;
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [signUpForm, setsignUpForm] = useState({
-    name: '',
-    email: '',
-    mobileNumber: '',
-    password: '',
+    EmailAdress: '',
+    MobileNumber: '',
+    Password: '',
+    ReturnLink:'http://offsetnowapi.fadelsoft.com/#/Home?VerifyId=',
+    RandomLink:RandomNumber,
+    FirstName:'',
+    LastName:'',
   })
-  const setName = (val) => {
-    setLoginForm({ 
-      ...loginForm,
-      name: val
+  const setFirstName = (val) => {
+    setsignUpForm({ 
+      ...signUpForm,
+      FirstName: val
+    });
+  }
+  const setLastName = (val) => {
+    setsignUpForm({ 
+      ...signUpForm,
+      LastName: val
     });
   }
   const setEmail = (val) => {
-    setLoginForm({
-      ...loginForm,
-      email: val
+    setsignUpForm({
+      ...signUpForm,
+      EmailAdress: val
     });
   }
   const setNumber = (val) => {
-    setLoginForm({ 
-      ...loginForm,
-      mobileNumber: val
+    setsignUpForm({ 
+      ...signUpForm,
+      MobileNumber: val
     });
   }
   const setPassword = (val) => {
-    setLoginForm({ 
-      ...loginForm,
-      password: val
+    setsignUpForm({ 
+      ...signUpForm,
+      Password: val
     });
   }
 
   const signUp = ((data) => {
-    const url = 'https://feapi.offsetnow.com/api/admin/SignUp'
-    axios.post(url,data).then((response) => {
-        const temp = response.data;
-        console.log("login response",temp)
-      })
-      .catch((error) => {
-        alert(error);
-      });
+  
   });
 
+  const  {SignUp} = React.useContext(AuthContext); 
   console.log(navigation);
   return (
     <View style={styles.container}>
@@ -83,12 +87,22 @@ export default function SignUpScreen({ navigation }) {
       <ScrollView>
       <View style = {styles.form}>
       <View style = { styles.nameInput}>
-        <Text style = {styles.nameText}>Name</Text>
+        <Text style = {styles.nameText}>FirstName</Text>
           <TextInput style = {styles.passwordText}
-            placeholder="Name"
+            placeholder="FirstName"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText = {(val) => setName(val)}
+            onChangeText = {(val) => setFirstName(val)}
+          />
+        <Text></Text>
+        </View>
+        <View style = { styles.LastnameInput}>
+        <Text style = {styles.nameText}>LastName</Text>
+          <TextInput style = {styles.passwordText}
+            placeholder="LastName"
+            style={styles.textInput}
+            autoCapitalize="none"
+            onChangeText = {(val) => setLastName(val)}
           />
         <Text></Text>
         </View>
@@ -134,10 +148,12 @@ export default function SignUpScreen({ navigation }) {
           <Text></Text>
         </View>
           <View>
-          <TouchableOpacity activeOpacity={0.6}>
+          <TouchableOpacity activeOpacity={0.6}
+          onPress = {()=>SignUp(signUpForm)}
+          >
             <View style = {styles.button}>
               <Text style = { styles.buttonText}
-                onPress = {() => signUp(signUpForm)}
+                // onPress = {() => signUp(signUpForm)}
               >Sign Up</Text>
             </View>
           </TouchableOpacity>
@@ -184,6 +200,15 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
   },
+  LastnameInput:{paddingLeft: 20,
+    backgroundColor: "#fff",
+    width: wp('80%'),
+    marginTop: hp('2%'),
+    borderStyle:'solid',
+    borderColor: "#eee",
+    borderWidth: 0.5,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,},
 
   mobileInput: {
     paddingLeft: 20,
