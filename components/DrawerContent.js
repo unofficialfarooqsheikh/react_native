@@ -12,6 +12,7 @@ import {
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import { AuthContext,AppContext } from "../components/Context";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -22,6 +23,8 @@ import { log } from "react-native-reanimated";
 const { width, height } = Dimensions.get("window");
 
 export default function DrawerContent(props) {
+  const myContext = useContext(AppContext);
+  console.log(JSON.stringify(myContext))
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>

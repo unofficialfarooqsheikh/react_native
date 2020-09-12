@@ -43,9 +43,10 @@ console.log(height, width);
 import { AuthContext } from "../components/Context";
 import axios from 'axios';
 export default function AppNavigator() {
+  const userSettings=[];
   const [isLoading, setIsloading] = useState(true);
   const [userToken, SetUserToken] = useState(null);
-
+  const [setUserDetails ,SetUserDetails] = useState(null)
   useEffect(() => {
     setTimeout(() => {
       dispatch({ type: "REGISTER", token: "adf" });
@@ -107,26 +108,39 @@ export default function AppNavigator() {
       // SetUserToken('ISValid');
       // setIsloading(false);
       console.log(userData.email);
-      const login = (userData) => {
+      
         const url ="https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=" +userData.email +"&password=" +userData.password;
-        axios.get(url)
-          .then((response) => {
-            const temp = response.data;
-            console.log("login response", temp);
-            SetUserToken("iih");
-          })
-          .catch((error) => {
-            alert(error);
-          });
+        // axios.get(url)
+        //   .then((response) => {
+        //     const temp = response.data;
+        //     console.log("login response", temp);
+        //     SetUserToken("iih");
+        //   })
+        //   .catch((error) => {
+        //     alert(error);
+        //   });
+         fetch(url)
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if(responseJson.Message=="Success"){
+          console.log(responseJson.objresult);
+          SetUserToken(responseJson.objresult);
+          SetUserDetails=responseJson.objresult;
+          dispatch({ type: "LOGIN", id: userData.email, token: userToken });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
           
-      };
+     
 
-      if (userData.email == "user" && userData.password == "pass") {
-        SetUserToken("iih");
-        alert("tokenset");
-        console.log("################################s" + userData.email);
-      dispatch({ type: "LOGIN", id: userData.email, token: userToken });
-      }
+      // if (userData.email == "user" && userData.password == "pass") {
+      //   SetUserToken("iih");
+      //   alert("tokenset");
+      //   console.log("################################s" + userData.email);
+     
+      // }
       
     },
     SingOut: () => {
@@ -324,11 +338,13 @@ export default function AppNavigator() {
   };
 
   return (
-    <AuthContext.Provider value={authContext}>
+    <AuthContext.Provider value={userToken}>
       {userToken != null ? (
+         
         <NavigationContainer>
           <CreateBottomTab />
         </NavigationContainer>
+       
       ) : (
         <NavigationContainer>
           <CreateLoginStack />
