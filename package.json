@@ -15,6 +15,7 @@
     "@react-navigation/stack": "^5.9.0",
     "axios": "^0.20.0",
     "expo": "~38.0.8",
+    "expo-font": "~8.2.1",
     "expo-location": "~8.2.1",
     "expo-status-bar": "^1.0.2",
     "native-base": "^2.13.14",
@@ -24,6 +25,7 @@
     "react-native-elements": "^2.2.1",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-slider-box": "^1.0.12",
+    "react-native-loading-spinner-overlay": "^1.1.0",
     "react-native-paper": "^4.0.1",
     "react-native-permissions": "^2.1.5",
     "react-native-range-slider": "^0.1.2",
@@ -34,8 +36,7 @@
     "react-native-svg": "12.1.0",
     "react-native-vector-icons": "^7.0.0",
     "react-native-web": "~0.11.7",
-    "react-navigation": "^4.4.0",
-    "expo-font": "~8.2.1"
+    "react-navigation": "^4.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

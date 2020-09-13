@@ -116,8 +116,9 @@ const [IsPress,setIsPress] = useState(false)
           </View>
         </View>
       </SafeAreaView>
+      
       <View style={{marginTop:hp("15%")}}>
-  
+      <Text>Hi</Text>
       <DeckSwiper
               dataSource={Campaings}
               renderItem={(item) => { 

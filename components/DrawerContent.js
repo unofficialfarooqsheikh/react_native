@@ -12,7 +12,7 @@ import {
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-import { AuthContext,AppContext } from "../components/Context";
+import { AuthContext,UserContext } from "../components/Context";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -23,11 +23,13 @@ import { log } from "react-native-reanimated";
 const { width, height } = Dimensions.get("window");
 
 export default function DrawerContent(props) {
-  const myContext = useContext(AppContext);
-  console.log(JSON.stringify(myContext))
+  const  {SingOut} = React.useContext(AuthContext); 
+  //console.log(JSON.stringify(myContext))
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
+      <UserContext.Consumer>
+          {user => (
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
@@ -38,12 +40,14 @@ export default function DrawerContent(props) {
                 size={60}
               />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
-                <Title style={styles.title}>{"User Name"}</Title>
-                <Caption style={styles.caption}>{"Email@gmail.com"}</Caption>
+                <Title style={styles.title}>{user.Name}</Title>
+                <Caption style={styles.caption}>{user.EmailAddress}</Caption>
               </View>
             </View>
           </View>
         </View>
+             )}
+             </UserContext.Consumer>
         <Drawer.Section>
           <DrawerItem
           icon={(props) => {
@@ -120,7 +124,7 @@ export default function DrawerContent(props) {
             );
           }}
           label="Sign Out"
-          onPress={() => {}}
+          onPress = {()=>SingOut(null)}
         />
       </Drawer.Section>
     </View>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   View,
@@ -40,19 +41,33 @@ import colors from "../constants/colors";
 const { width, height } = Dimensions.get("window");
 // just to get idea of the height and width of the device
 console.log(height, width);
-import { AuthContext } from "../components/Context";
+import  {AuthContext,UserContext} from "../components/Context";
 import axios from 'axios';
+
 export default function AppNavigator() {
   const userSettings=[];
   const [isLoading, setIsloading] = useState(true);
   const [userToken, SetUserToken] = useState(null);
-  const [setUserDetails ,SetUserDetails] = useState(null)
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch({ type: "REGISTER", token: "adf" });
-    });
-  });
+  const [UserDetails ,SetUserDetails] = useState(null);
+ 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //   //  dispatch({ type: "REGISTER", token: "adf" });
+  //   alert('hi')
+  //     setIsloading(false)
+  //   },1000);
+   
+  // }, []);
 
+  // if(isLoading){
+
+  //   return (
+  //     <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+  //       <ActivityIndicator size="large"></ActivityIndicator>
+  //     </View>
+  //   )
+
+  // }
   const initialLoginState = {
     isLoading: true,
     userName: null,
@@ -105,6 +120,7 @@ export default function AppNavigator() {
   );
   const authContext = React.useMemo(() => ({
     signIn: (userData) => {
+      setIsloading(true);
       // SetUserToken('ISValid');
       // setIsloading(false);
       console.log(userData.email);
@@ -125,7 +141,7 @@ export default function AppNavigator() {
           if(responseJson.Message=="Success"){
           console.log(responseJson.objresult);
           SetUserToken(responseJson.objresult);
-          SetUserDetails=responseJson.objresult;
+          SetUserDetails(responseJson.objresult);
           dispatch({ type: "LOGIN", id: userData.email, token: userToken });
           }
         })
@@ -144,6 +160,7 @@ export default function AppNavigator() {
       
     },
     SingOut: () => {
+      console.log("LogOut");
       SetUserToken(null);
       setIsloading(false);
     },
@@ -328,23 +345,24 @@ export default function AppNavigator() {
           component={OptionsScreen}
           options={{ tabBarLabel: "Notifications" }}
         />
+        {userToken == null ?
         <BottomTab.Screen
           name="Login"
           children={CreateLoginStack}
           options={{ tabBarLabel: "Login" }}
-        />
+        />: null}
       </BottomTab.Navigator>
     );
   };
 
   return (
-    <AuthContext.Provider value={userToken}>
+    <AuthContext.Provider value={authContext}>
       {userToken != null ? (
-         
+           <UserContext.Provider value={userToken}>
         <NavigationContainer>
-          <CreateBottomTab />
+          <CreateBottomTab/>
         </NavigationContainer>
-       
+        </UserContext.Provider>
       ) : (
         <NavigationContainer>
           <CreateLoginStack />
