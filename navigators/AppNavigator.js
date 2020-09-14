@@ -13,6 +13,9 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
+import { Overlay } from 'react-native-elements';
+
+import { Snackbar } from 'react-native-paper';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
@@ -32,6 +35,7 @@ import ScreenOne from "../screens/drawer/ScreenOne";
 import ScreenTwo from "../screens/drawer/ScreenTwo";
 import ScreenThree from "../screens/drawer/ScreenThree";
 import Icon from "react-native-vector-icons/Octicons";
+
 import { FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 import Constants from "expo-constants";
@@ -41,42 +45,63 @@ import colors from "../constants/colors";
 const { width, height } = Dimensions.get("window");
 // just to get idea of the height and width of the device
 console.log(height, width);
-import  {AuthContext,UserContext} from "../components/Context";
-import axios from 'axios';
+import { AuthContext, UserContext } from "../components/Context";
+import axios from "axios";
+import { overlay } from "react-native-paper";
 
 export default function AppNavigator() {
-  const userSettings=[];
-  const [isLoading, setIsloading] = useState(true);
+  const userSettings = [];
+  const [isLoading, setIsloading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [userToken, SetUserToken] = useState(null);
-  const [UserDetails ,SetUserDetails] = useState(null);
- 
+  const [UserDetails, SetUserDetails] = useState(null);
+
   // useEffect(() => {
   //   setTimeout(() => {
   //   //  dispatch({ type: "REGISTER", token: "adf" });
   //   alert('hi')
   //     setIsloading(false)
   //   },1000);
-   
+
   // }, []);
-
-  // if(isLoading){
-
-  //   return (
-  //     <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-  //       <ActivityIndicator size="large"></ActivityIndicator>
-  //     </View>
-  //   )
-
-  // }
+  const LoaderComponent = () => {
+    if (isLoading) {
+      return (
+        <Overlay isVisible={true} >
+          <View>
+            <ActivityIndicator size="large"></ActivityIndicator>
+          </View>
+        </Overlay>
+      );
+    }
+    else{
+      return null
+    }
+  };
+  const SnackComponent = () =>{
+    if(isError){
+    return (<Snackbar
+        visible={isError}
+        onDismiss={()=>{setIsError(false)}}
+        action={{
+          label: 'Undo',
+          onPress: () => {
+            setIsError(false)
+          },
+        }}>
+        {errorMsg}
+      </Snackbar>)
+    }
+    else{
+      return null
+    }
+  }
   const initialLoginState = {
-    isLoading: true,
+    isLoading: false,
     userName: null,
     userToken: null,
   };
-
- 
-
- 
 
   const loginReducer = (prevState, action) => {
     switch (action.type) {
@@ -94,7 +119,7 @@ export default function AppNavigator() {
           userToken: action.token,
           isLoading: false,
         };
-        console.log(userToken +  "   UserToken Genreated")
+        console.log(userToken + "   UserToken Genreated");
         break;
       case "LOGOUT":
         return {
@@ -123,41 +148,50 @@ export default function AppNavigator() {
       setIsloading(true);
       // SetUserToken('ISValid');
       // setIsloading(false);
-      console.log(userData.email);
-      
-        const url ="https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=" +userData.email +"&password=" +userData.password;
-        // axios.get(url)
-        //   .then((response) => {
-        //     const temp = response.data;
-        //     console.log("login response", temp);
-        //     SetUserToken("iih");
-        //   })
-        //   .catch((error) => {
-        //     alert(error);
-        //   });
-         fetch(url)
+      console.log("signin userdata", userData.email);
+
+      const url =
+        "https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=" +
+        userData.email +
+        "&password=" +
+        userData.password;
+      // axios.get(url)
+      //   .then((response) => {
+      //     const temp = response.data;
+      //     console.log("login response", temp);
+      //     SetUserToken("iih");
+      //   })
+      //   .catch((error) => {
+      //     alert(error);
+      //   });
+      fetch(url)
         .then((response) => response.json())
         .then((responseJson) => {
-          if(responseJson.Message=="Success"){
-          console.log(responseJson.objresult);
-          SetUserToken(responseJson.objresult);
-          SetUserDetails(responseJson.objresult);
-          dispatch({ type: "LOGIN", id: userData.email, token: userToken });
+          console.log("response from login", responseJson);
+          setIsloading(false);
+          if (responseJson.Message == "Success") {
+            console.log("Sign in Login", responseJson.objresult);
+            SetUserToken(responseJson.objresult);
+            SetUserDetails(responseJson.objresult);
+            dispatch({ type: "LOGIN", id: userData.email, token: userToken });
+          }
+          else{
+            setIsError(true)
+            setErrorMsg(responseJson.Message)
           }
         })
         .catch((error) => {
+          setIsloading(false);
           console.error(error);
+          console.warn(error);
         });
-          
-     
 
       // if (userData.email == "user" && userData.password == "pass") {
       //   SetUserToken("iih");
       //   alert("tokenset");
       //   console.log("################################s" + userData.email);
-     
+
       // }
-      
     },
     SingOut: () => {
       console.log("LogOut");
@@ -167,39 +201,41 @@ export default function AppNavigator() {
     SignUp: (data) => {
       // SetUserToken("ISValid");
       // setIsloading(false);
-      console.log("signupHit")
-      console.log(data)
-      const url = 'https://feapi.offsetnow.com/api/admin/SignUp';
-      axios.post(url,data).then((response) => {
+      console.log("signupHit");
+      console.log(data);
+      const url = "https://feapi.offsetnow.com/api/admin/SignUp";
+      axios
+        .post(url, data)
+        .then((response) => {
           const temp = response.data;
-          console.log("login response",temp)
+          console.log("login response", temp);
           alert("signup Success");
         })
         .catch((error) => {
           alert(error);
         });
-    //   const requestOptions = {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: data
-    // };
-    // fetch(url, requestOptions)
-    //     .then(async response => {
-    //         const data = await response.json();
+      //   const requestOptions = {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: data
+      // };
+      // fetch(url, requestOptions)
+      //     .then(async response => {
+      //         const data = await response.json();
 
-    //         // check for error response
-    //         if (!response.ok) {
-    //             // get error message from body or default to response status
-    //             const error = (data && data.message) || response.status;
-    //             return Promise.reject(error);
-    //         }
+      //         // check for error response
+      //         if (!response.ok) {
+      //             // get error message from body or default to response status
+      //             const error = (data && data.message) || response.status;
+      //             return Promise.reject(error);
+      //         }
 
-    //         this.setState({ postId: data.id })
-    //     })
-    //     .catch(error => {
-    //         this.setState({ errorMessage: error.toString() });
-    //         console.error('There was an error!', error);
-    //     });
+      //         this.setState({ postId: data.id })
+      //     })
+      //     .catch(error => {
+      //         this.setState({ errorMessage: error.toString() });
+      //         console.error('There was an error!', error);
+      //     });
     },
   }));
 
@@ -242,8 +278,12 @@ export default function AppNavigator() {
   //creating the login stack
   const CreateLoginStack = (navigation) => {
     return (
-      <LoginStack.Navigator >
-        <LoginStack.Screen name="login" component={LoginScreen} options={{headerShown: false}}/>
+      <LoginStack.Navigator>
+        <LoginStack.Screen
+          name="login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
         <LoginStack.Screen name="signup" component={SignUpScreen} />
       </LoginStack.Navigator>
     );
@@ -345,12 +385,13 @@ export default function AppNavigator() {
           component={OptionsScreen}
           options={{ tabBarLabel: "Notifications" }}
         />
-        {userToken == null ?
-        <BottomTab.Screen
-          name="Login"
-          children={CreateLoginStack}
-          options={{ tabBarLabel: "Login" }}
-        />: null}
+        {userToken == null ? (
+          <BottomTab.Screen
+            name="Login"
+            children={CreateLoginStack}
+            options={{ tabBarLabel: "Login" }}
+          />
+        ) : null}
       </BottomTab.Navigator>
     );
   };
@@ -358,19 +399,18 @@ export default function AppNavigator() {
   return (
     <AuthContext.Provider value={authContext}>
       {userToken != null ? (
-           <UserContext.Provider value={userToken}>
-        <NavigationContainer>
-          <CreateBottomTab/>
-        </NavigationContainer>
+        <UserContext.Provider value={userToken}>
+          <NavigationContainer>
+            <CreateBottomTab />
+          </NavigationContainer>
         </UserContext.Provider>
       ) : (
         <NavigationContainer>
           <CreateLoginStack />
+          <LoaderComponent/>
+          <SnackComponent/>
         </NavigationContainer>
       )}
-      {/* <NavigationContainer>
-      <CreateBottomTab />
-    </NavigationContainer> */}
     </AuthContext.Provider>
   );
 }

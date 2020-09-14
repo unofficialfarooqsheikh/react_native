@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 import {
@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Switch,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import { Icon } from "native-base";
 
@@ -24,36 +24,38 @@ const { width, height } = Dimensions.get("window");
 import colors from "../constants/colors";
 import { color } from "react-native-reanimated";
 import { ScrollView } from "react-native-gesture-handler";
-import {AuthContext} from "../components/Context";
+import { AuthContext } from "../components/Context";
 
-export default function LoginScreen({ navigation  }) {
+export default function LoginScreen({ navigation }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const [hidePass, setHidePass] = useState(true);
+  const [formEmailError, setFormEmailError] = useState(false);
+  const [formPassError, setFormPassError] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const formRef = useRef(null);
+
   console.log("****************" + navigation);
 
   const [loginForm, setLoginForm] = useState({
-    email: '',
-    password: '',
-  })
+    email: "",
+    password: "",
+  });
 
   const setEmail = (val) => {
     setLoginForm({
       ...loginForm,
-      email: val
+      email: val,
     });
-  }
+  };
 
   const setPassword = (val) => {
-    setLoginForm({ 
+    setLoginForm({
       ...loginForm,
-      password: val
+      password: val,
     });
-  }
+  };
 
- 
-
-  const  {signIn} = React.useContext(AuthContext); 
+  const { signIn } = React.useContext(AuthContext);
 
   return (
     <View style={styles.container}>
@@ -66,30 +68,40 @@ export default function LoginScreen({ navigation  }) {
           }}
         />
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='handled'>
         <Text style={styles.title}>Welcome!</Text>
         <View style={styles.form}>
-          <View style={styles.emailInput}>
+          <View style={[styles.emailInput, formEmailError ? {borderWidth:1,borderColor:"red"}: null]}>
             <Text style={styles.EmailText}>Email</Text>
             <TextInput
-              style={styles.passwordText}
+              ref={formRef}
+              textContentType={"emailAddress"}
+              keyboardType= {"email-address"}
+              style={styles.passwordErrorText}
               placeholder="Your email"
               style={styles.textInput}
               autoCapitalize="none"
-              onChangeText = {(val) => setEmail(val)}
+              onChangeText={(val) => {
+                setFormEmailError(false)
+                setEmail(val)}}
             />
             <Text></Text>
           </View>
-          <View style={styles.passwordInput}>
+          <View style={[styles.passwordInput, formPassError ? {borderWidth:1,borderColor:"red"}: null]}>
             <Text style={styles.passwordText}>Password</Text>
             <View style={styles.passContent}>
-              <TextInput
-                style={{ marginTop: 20 }}
-                placeholder="Password"
-                style={styles.textInput}
-                secureTextEntry={hidePass}
-                onChangeText = {(val) => setPassword(val)}
-              />
+              <View style={{width:"70%"}}>
+                <TextInput
+                  ref={formRef}
+                  style={{ marginTop: 20,}}
+                  placeholder="Password"
+                  style={styles.textInput}
+                  secureTextEntry={hidePass}
+                  onChangeText={(val) => 
+                  { setFormPassError(false)
+                    setPassword(val)}}
+                />
+              </View>
               <TouchableOpacity
                 onPress={() => {
                   setHidePass(!hidePass);
@@ -127,13 +139,25 @@ export default function LoginScreen({ navigation  }) {
             />
           </View>
           <View>
-            <TouchableOpacity activeOpacity={0.6}
-              onPress={()=>{signIn(loginForm)}}
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => {
+                if (loginForm.email != "" && loginForm.password != "") {
+                  signIn(loginForm);
+                }
+                else{
+                  setFormEmailError(true)
+                  setFormPassError(true)
+                }
+              }}
             >
               <View style={styles.button}>
-                <Text style={styles.buttonText}
+                <Text
+                  style={styles.buttonText}
                   // onPress = {() => login(loginForm)}
-                >Sign In</Text>
+                >
+                  Sign In
+                </Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -200,7 +224,7 @@ export default function LoginScreen({ navigation  }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop:hp('7%'),
+    paddingTop: hp("7%"),
   },
   title: {
     textAlign: "center",
@@ -260,6 +284,19 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
 
+  passwordErrorText: {
+    fontSize: 15,
+    borderColor:"red",
+    marginTop: 10,
+    marginBottom: 10,
+    paddingVertical: 5,
+  },
+  passContentError:{
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderWidth:1,
+    borderColor:"red"
+  },
   passContent: {
     flexDirection: "row",
     justifyContent: "space-between",
