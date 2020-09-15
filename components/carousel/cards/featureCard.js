@@ -50,7 +50,7 @@ const FeatureCards = ({data}) =>{
 
                         <Text style={styles.paragraph}>{data.sliderstitle1}</Text>
                     </View>
-                    <Slider value={data.Progress} thumbTintColor={Colours.primary} disabled={true} />
+                    <Slider value={parseInt(data.Progress)} thumbTintColor={Colours.primary} disabled={true} />
                     <View style={{ flex: 1, flexDirection: 'row' }}>
 
                         <View style={{ flex: 1 }}>

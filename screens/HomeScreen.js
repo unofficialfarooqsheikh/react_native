@@ -8,18 +8,9 @@ import {
   ScrollView,
   Image,
   ImageBackground,
-  Picker,
 } from "react-native";
-// import CarouselItem from '../components/carousel/carousel_item'
-import { SliderBox } from "react-native-image-slider-box";
-import CardsComponent from "../components/carousel/cards/cards";
-import { List } from 'react-native-paper';
-import TextComponent from "../components/carousel/textComponent";
-import colors from "../constants/colors";
-import { Slider, Tooltip } from "react-native-elements";
 import SliderCards from "../components/carousel/cards/donate_cards";
 import FeatureCards from "../components/carousel/cards/featureCard";
-import WavyHeader from "../components/SvgBackground/svgBackground";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -121,27 +112,6 @@ export default function HomeScreen({ navigation }) {
   const FundRaiseSlider = [{ Progress: "0.8" }];
   return (
     <ScrollView style={{ flex: 1 , backgroundColor:"#DCDCDC"}}>
-
-      {/* Temporary slider box which would be replaced by customer slider box */}
-      
-      {/* <SliderBox
-        sliderBoxHeight={height / 3}
-        circleLoop
-        autoplay={true}
-        resizeMethod={"resize"}
-        resizeMode={"cover"}
-        images={ImageList}
-        dotColor="#FFEE58"
-        inactiveDotColor="#90A4AE"
-      /> */}
-     
-      {/* return No of cards as much as length of data in DataList */}
-      {/* <View>
-        {DataList.map((item, index) => {
-          return <CardsComponent key={index} data={item} />;
-        })}
-      </View> */}
-      {/* Causes div */}
       <View style={styles.TextView}>
         <Text style={styles.TextSectionHeader}>Top causes</Text>
         <Text style={styles.TextSectionHDesc}>
@@ -153,15 +123,6 @@ export default function HomeScreen({ navigation }) {
           return <SliderCards key={index} data={item} />;
         })}
       </View>
-      {/* <View>
-      <ImageBackground source={image} style={styles.image}>
-        {
-          CircleData.map((item,index)=>{
-           return  <ParallaxCircle key={index} data={item} />
-      })
-        }
-          </ImageBackground>
-      </View> */}
       <View>
         {slideCardDataList.map((item, index) => {
           return <FeatureCards key={index} data={item} />;

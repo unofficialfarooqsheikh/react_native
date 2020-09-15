@@ -5,6 +5,7 @@ import {
   Image,
   Dimensions,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import {
   Container,
@@ -18,7 +19,7 @@ import {
   Left,
   Body,
   Icon,
-  Picker
+  Picker,
 } from "native-base";
 import {
   heightPercentageToDP as hp,
@@ -31,15 +32,18 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 export default function BrowseAPledge() {
   const [category, setCategory] = useState([]);
   const [catselect, setCatselect] = useState("0");
-  const [Campaings,setCampgains] = useState([]);
-  const [CurrentSelectCampaing ,SetCurrentSaveCampaign]=useState([])
-const [IsPress,setIsPress] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [Campaings, setCampgains] = useState([]);
+  const [CurrentSelectCampaing, SetCurrentSaveCampaign] = useState([]);
+  const [IsPress, setIsPress] = useState(false);
   const seperator = () => {
     return;
   };
 
   useEffect(() => {
-    axios.get("https://feapi.offsetnow.com/api/admin/GetCategories").then((response) => {
+    axios
+      .get("https://feapi.offsetnow.com/api/admin/GetCategories")
+      .then((response) => {
         const temp = response.data.objresult;
         // console.log("Initial data",temp)
         setCategory([...temp]);
@@ -49,37 +53,47 @@ const [IsPress,setIsPress] = useState(false)
       });
   }, []);
 
-
-    useEffect(() => {
-      axios.get("https://feapi.offsetnow.com/api/admin/GetCampaignsByCategory?CategoryId=0&CountryCode=UK").then((response) => {
-          const DataSet = response.data.objresult;
-          for(var i in DataSet){
-            DataSet[i].CampaignImages = "https://feapi.offsetnow.com"+DataSet[i].CampaignImages;
-
-          }
-          //console.log("Campaign data",DataSet)
-          setCampgains([...DataSet]);
-        }).catch((error) => {
-          alert(error);
-        });
-    }, []);
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(
+        "https://feapi.offsetnow.com/api/admin/GetCampaignsByCategory?CategoryId=0&CountryCode=UK"
+      )
+      .then((response) => {
+        const DataSet = response.data.objresult;
+        for (var i in DataSet) {
+          DataSet[i].CampaignImages =
+            "https://feapi.offsetnow.com" + DataSet[i].CampaignImages;
+        }
+        //console.log("Campaign data",DataSet)
+        setLoading(false);
+        setCampgains([...DataSet]);
+      })
+      .catch((error) => {
+        setLoading(false);
+        alert(error);
+      });
+  }, []);
 
   // console.log("DATA S",setCategory,"DATA E")
   const cards = [
     {
       text: "Card One",
       name: "One",
-      image: "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
+      image:
+        "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
     },
     {
       text: "Card two",
       name: "two",
-      image: "https://feapi.offsetnow.com/CampaignImages/f48db8f2-da59-4754-8c21-d0cef320536d.jpg",
+      image:
+        "https://feapi.offsetnow.com/CampaignImages/f48db8f2-da59-4754-8c21-d0cef320536d.jpg",
     },
     {
       text: "Card three",
       name: "three",
-      image: "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
+      image:
+        "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
     },
     {
       text: "Card Four",
@@ -89,20 +103,24 @@ const [IsPress,setIsPress] = useState(false)
   ];
   return (
     <React.Fragment>
-    {/* <Header/> */}
-      <SafeAreaView>
+      {/* <Header/> */}
+      <SafeAreaView style={{ marginTop: hp("5%")}}>
         <View style={styles.container}>
           <View style={styles.pickerContainer}>
             <Picker
               note
               mode="dropdown"
-              style={{ width: wp("50%") }}
+              style={{ width: wp("50%"), color:"black" }}
               selectedValue={catselect}
               onValueChange={(value) => {
                 setCatselect(value);
               }}
             >
-              <Picker.Item key={"Default"} label={"All Categories"} value={"0"} />
+              <Picker.Item
+                key={"Default"}
+                label={"All Categories"}
+                value={"0"}
+              />
               {category.map((item, index) => {
                 return (
                   <Picker.Item
@@ -116,60 +134,64 @@ const [IsPress,setIsPress] = useState(false)
           </View>
         </View>
       </SafeAreaView>
-      
-      <View style={{marginTop:hp("15%")}}>
-      <Text>Hi</Text>
-      <DeckSwiper
-              dataSource={Campaings}
-              renderItem={(item) => { 
-console.log("##################################################################################################################")
-                return(
-               
-                  <TouchableOpacity 
-                  onPress={()=>{
-                    // SetCurrentSaveCampaign([...item])
-                    // console.log(CurrentSelectCampaing)
-                  }}
-                  >
+
+      <View style={{ marginTop: hp("8%")}}>
+
+        {loading ? (
+          <View style={{flex:1, justifyContent:"center"}}><ActivityIndicator size={"small"} /></View>
+        ) : (
+          <FlatList 
+            data={Campaings}
+            keyExtractor={(item, index) => {
+              console.log("Key",item)
+              return item.CampaignId.toString()
+            }}
+            renderItem={(item) => {
+              {
+                console.log("campaings++++++++++++++++", item);
+              }
+              return (
+                  <View style={{marginHorizontal:10}}>
                     <Card style={{ elevation: 3 }}>
-                    <CardItem>
-                      {/* <Left>
-                        <Thumbnail source={{ uri: item.CampaignImages }} />
-                        <Body>
-                          <Text>{item.FundraiserTitle}</Text>
-                       
-                        </Body>
-                      </Left> */}
-                    </CardItem>
-                    <CardItem cardBody>
-                      <Image
-                        style={{ height: 300, flex: 1 }}
-                        source={{ uri: item.CampaignImages }}
-                       
-                      />
-                    </CardItem>
-                    <View style={styles.ImageHeightSet}> 
-                    <Text style={styles.ImageDesc}>{item.FundraiserTitle}</Text>
-                     <Text  style={styles.ImageDesc2}>{item.CampaignShortDescription}</Text>
-                    </View>
-                    <CardItem>
-                      <Icon type="AntDesign" name="like2" style={{ color: "#ED4A6A" }} />
-                      <Text>{item.CampaignName}</Text>
-                    </CardItem>
-                  </Card>
-                  </TouchableOpacity>
-                  
-  
-                )
-              } }
-            />
-     
-      
+                      <CardItem>
+                        {/* <Left>
+                            <Thumbnail source={{ uri: item.CampaignImages }} />
+                            <Body>
+                              <Text>{item.FundraiserTitle}</Text>
+                           
+                            </Body>
+                          </Left> */}
+                      </CardItem>
+                      <CardItem cardBody>
+                        <Image
+                          style={{ height: 300, flex: 1 }}
+                          source={{ uri: item.item.CampaignImages }}
+                        />
+                      </CardItem>
+                      <View style={styles.ImageHeightSet}>
+                        <Text style={styles.ImageDesc}>{item.FundraiserTitle}</Text>
+                        <Text style={styles.ImageDesc2}>
+                          {item.item.CampaignShortDescription}
+                        </Text>
+                      </View>
+                      <CardItem>
+                        <Icon
+                          type="AntDesign"
+                          name="like2"
+                          style={{ color: "#ED4A6A" }}
+                        />
+                        <Text>{item.item.CampaignName}</Text>
+                      </CardItem>
+                    </Card>
+                  </View>
+              );
+            }}
+          />
+        )}
+        
       </View>
       
-
     </React.Fragment>
-    
   );
 }
 
@@ -190,17 +212,15 @@ const styles = StyleSheet.create({
     marginTop: "10%",
     marginBottom: "10%",
   },
-    ImageHeightSet:{
-  
-  paddingVertical:15,
-
+  ImageHeightSet: {
+    paddingVertical: 15,
   },
-  ImageDesc:{
-    textAlign:'center',
-    fontFamily:'lato',
-    fontSize:25,
+  ImageDesc: {
+    textAlign: "center",
+    fontFamily: "lato",
+    fontSize: 25,
   },
-  ImageDesc2:{
-    textAlign:'center',
-  }
+  ImageDesc2: {
+    textAlign: "center",
+  },
 });

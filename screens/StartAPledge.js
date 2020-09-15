@@ -93,11 +93,11 @@ export default function StartAPledge({ navigation }) {
           </View>
       <View style = { styles.nameInput}>
         {/* <Text style = {styles.nameText}>Amount</Text> */}
-          <TextInput style = {styles.passwordText}
+          <TextInput style ={styles.passwordText}
             placeholder="Amount"
             style={styles.textInput}
             autoCapitalize="none"
-            value ={pledgeForm}
+            value ={pledgeForm.Amount}
             onChangeText = {(val) => setAmount(val)}
           />
         <Text></Text>
@@ -119,7 +119,7 @@ export default function StartAPledge({ navigation }) {
               style={{ width: wp("50%") }}
               selectedValue={setPledgeFor}
               onValueChange={(value) => {
-                pledgeForSelect(value);
+                setPledgeFor(value);
               }}
             >
               <Picker.Item key={"Default"} label={"Pledge For"} value={"0"} />
@@ -149,7 +149,7 @@ export default function StartAPledge({ navigation }) {
        
           <View>
           <TouchableOpacity activeOpacity={0.6}
-          onPress = {()=>SignUp(signUpForm)}
+          onPress = {()=>{}}
           >
             <View style = {styles.button}>
               <Text style = { styles.buttonText}

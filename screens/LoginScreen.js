@@ -34,7 +34,6 @@ export default function LoginScreen({ navigation }) {
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const formRef = useRef(null);
 
-  console.log("****************" + navigation);
 
   const [loginForm, setLoginForm] = useState({
     email: "",

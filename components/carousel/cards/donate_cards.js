@@ -36,7 +36,7 @@ const SliderCards = ({ data }) => {
           }}
         >
           <Slider
-            value={parseInt(data.Progress) }
+            value={1 }
             thumbTintColor={Colours.primary}
             disabled={true}
           />
