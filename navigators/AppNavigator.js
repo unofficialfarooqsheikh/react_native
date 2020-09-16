@@ -43,6 +43,10 @@ import SignUpScreen from "../screens/SignUpScreen";
 import colors from "../constants/colors";
 // getting the dimensions of the screen
 const { width, height } = Dimensions.get("window");
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
 // just to get idea of the height and width of the device
 console.log(height, width);
 import { AuthContext, UserContext } from "../components/Context";
@@ -55,6 +59,7 @@ export default function AppNavigator() {
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [userToken, SetUserToken] = useState(null);
+  const [skipLogin, setSkipLogin] = useState(false);
   const [UserDetails, SetUserDetails] = useState(null);
 
   // useEffect(() => {
@@ -151,7 +156,7 @@ export default function AppNavigator() {
       console.log("signin userdata", userData.email);
 
       const url =
-        "https://feapi.offsetnow.com/api/admin/SignIn?emailAddress=" +
+        "http://feapi.offsetnow.com/api/admin/SignIn?emailAddress=" +
         userData.email +
         "&password=" +
         userData.password;
@@ -236,6 +241,9 @@ export default function AppNavigator() {
       //         this.setState({ errorMessage: error.toString() });
       //         console.error('There was an error!', error);
       //     });
+    },
+    SkipLogin:()=>{
+      setSkipLogin(true)
     },
   }));
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   FlatList,
+  TouchableOpacity,
   Image,
   Dimensions,
   SafeAreaView,
@@ -9,6 +10,9 @@ import {
 } from "react-native";
 import {
   Container,
+  Content,
+  List,
+  ListItem,
   Header,
   View,
   DeckSwiper,
@@ -16,10 +20,12 @@ import {
   CardItem,
   Thumbnail,
   Text,
-  Left,
-  Body,
   Icon,
   Picker,
+  Separator,
+  Left,
+  Body,
+  Right,
 } from "native-base";
 import {
   heightPercentageToDP as hp,
@@ -27,7 +33,6 @@ import {
 } from "react-native-responsive-screen";
 const { width, height } = Dimensions.get("window");
 import axios from "axios";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function BrowseAPledge() {
   const [category, setCategory] = useState([]);
@@ -42,7 +47,7 @@ export default function BrowseAPledge() {
 
   useEffect(() => {
     axios
-      .get("https://feapi.offsetnow.com/api/admin/GetCategories")
+      .get("http://feapi.offsetnow.com/api/admin/GetCategories")
       .then((response) => {
         const temp = response.data.objresult;
         // console.log("Initial data",temp)
@@ -57,13 +62,13 @@ export default function BrowseAPledge() {
     setLoading(true);
     axios
       .get(
-        "https://feapi.offsetnow.com/api/admin/GetCampaignsByCategory?CategoryId=0&CountryCode=UK"
+        "http://feapi.offsetnow.com/api/admin/GetCampaignsByCategory?CategoryId="+catselect+"&CountryCode=UK"
       )
       .then((response) => {
         const DataSet = response.data.objresult;
         for (var i in DataSet) {
           DataSet[i].CampaignImages =
-            "https://feapi.offsetnow.com" + DataSet[i].CampaignImages;
+            "http://feapi.offsetnow.com" + DataSet[i].CampaignImages;
         }
         //console.log("Campaign data",DataSet)
         setLoading(false);
@@ -73,44 +78,19 @@ export default function BrowseAPledge() {
         setLoading(false);
         alert(error);
       });
-  }, []);
+  }, [catselect]);
 
-  // console.log("DATA S",setCategory,"DATA E")
-  const cards = [
-    {
-      text: "Card One",
-      name: "One",
-      image:
-        "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
-    },
-    {
-      text: "Card two",
-      name: "two",
-      image:
-        "https://feapi.offsetnow.com/CampaignImages/f48db8f2-da59-4754-8c21-d0cef320536d.jpg",
-    },
-    {
-      text: "Card three",
-      name: "three",
-      image:
-        "https://feapi.offsetnow.com/CampaignImages/7cb4b5d2-7f62-4a03-b9a4-64277fd40737.jpg",
-    },
-    {
-      text: "Card Four",
-      name: "Four",
-      image: "https://offsetnow.com/fun-fact-bg.jpg",
-    },
-  ];
+
   return (
     <React.Fragment>
       {/* <Header/> */}
-      <SafeAreaView style={{ marginTop: hp("5%")}}>
+      <SafeAreaView style={{ marginTop: hp("5%"), marginBottom: hp("1%") }}>
         <View style={styles.container}>
           <View style={styles.pickerContainer}>
             <Picker
               note
               mode="dropdown"
-              style={{ width: wp("50%"), color:"black" }}
+              style={{ width: wp("50%"), color: "black" }}
               selectedValue={catselect}
               onValueChange={(value) => {
                 setCatselect(value);
@@ -135,62 +115,94 @@ export default function BrowseAPledge() {
         </View>
       </SafeAreaView>
 
-      <View style={{ marginTop: hp("8%")}}>
-
+      <View style={{ marginTop: hp("8%"), height: hp("80%") }}>
         {loading ? (
-          <View style={{flex:1, justifyContent:"center"}}><ActivityIndicator size={"small"} /></View>
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <ActivityIndicator size={"small"} />
+          </View>
         ) : (
-          <FlatList 
+          <FlatList
+            numColumns={2}
             data={Campaings}
             keyExtractor={(item, index) => {
-              console.log("Key",item)
-              return item.CampaignId.toString()
+              return item.CampaignId.toString();
             }}
             renderItem={(item) => {
-              {
-                console.log("campaings++++++++++++++++", item);
-              }
               return (
-                  <View style={{marginHorizontal:10}}>
-                    <Card style={{ elevation: 3 }}>
-                      <CardItem>
-                        {/* <Left>
-                            <Thumbnail source={{ uri: item.CampaignImages }} />
-                            <Body>
-                              <Text>{item.FundraiserTitle}</Text>
-                           
-                            </Body>
-                          </Left> */}
-                      </CardItem>
-                      <CardItem cardBody>
-                        <Image
-                          style={{ height: 300, flex: 1 }}
-                          source={{ uri: item.item.CampaignImages }}
-                        />
-                      </CardItem>
-                      <View style={styles.ImageHeightSet}>
-                        <Text style={styles.ImageDesc}>{item.FundraiserTitle}</Text>
-                        <Text style={styles.ImageDesc2}>
-                          {item.item.CampaignShortDescription}
-                        </Text>
-                      </View>
-                      <CardItem>
-                        <Icon
-                          type="AntDesign"
-                          name="like2"
-                          style={{ color: "#ED4A6A" }}
-                        />
-                        <Text>{item.item.CampaignName}</Text>
-                      </CardItem>
-                    </Card>
-                  </View>
+                <View style={{ width: width / 2 }}>
+                  <Card style={{ elevation: 3 }}>
+                    <CardItem header>
+                      <Left>
+                        <Thumbnail source={{ uri: item.item.CampaignImages }} />
+                        <Body>
+                          <Text>{item.item.CampaignName}</Text>
+                        </Body>
+                      </Left>
+                    </CardItem>
+                    <CardItem cardBody>
+                      <Image
+                        style={{ height: 300, flex: 1 }}
+                        source={{ uri: item.item.CampaignImages }}
+                      />
+                    </CardItem>
+                    <View style={styles.ImageHeightSet}>
+                      <Text style={styles.ImageDesc}>
+                        {item.FundraiserTitle}
+                      </Text>
+                      <Text style={styles.ImageDesc2}>
+                        {item.item.CampaignShortDescription.length > 30 ? item.item.CampaignShortDescription.slice(0,30)+ "...":item.item.CampaignShortDescription}
+                      </Text>
+                    </View>
+                    <CardItem style={styles.CampaignValuesContainer}>
+                      <Content>
+                        <List>
+                          <ListItem>
+                            <View style={styles.CampaignValues}>
+                              <Text>Campaign Target </Text>
+                              <Text>:</Text>
+                              <Text>{item.item.CampaignTarget}</Text>
+                            </View>
+                          </ListItem>
+                          <ListItem noBorder>
+                            <View style={styles.CampaignValues}>
+                              <Text>Collected Amount </Text>
+                              <Text>:</Text>
+                              <Text>{item.item.CollectedAmount}</Text>
+                            </View>
+                          </ListItem>
+                        </List>
+                      </Content>
+                    </CardItem>
+                    <CardItem>
+                      <Left>
+                        <TouchableOpacity>
+                          <View style={{flexDirection:"column"}}>
+                            <Icon
+                              type="EvilIcons"
+                              name="like"
+                              style={{ color: "#ED4A6A" }}
+                            />
+                            <Text>{"Donate"}</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </Left>
+                      <Body></Body>
+                      <Right>
+                        <TouchableOpacity>
+                          <Icon type="AntDesign"
+                            name="sharealt"
+                            style={{ color: "#ED4A6A" }}/>
+                            <Text>{"Share"}</Text>
+                        </TouchableOpacity>
+                      </Right>
+                    </CardItem>
+                  </Card>
+                </View>
               );
             }}
           />
         )}
-        
       </View>
-      
     </React.Fragment>
   );
 }
@@ -222,5 +234,16 @@ const styles = StyleSheet.create({
   },
   ImageDesc2: {
     textAlign: "center",
+  },
+  CampaignValuesContainer: {
+    flexDirection: "column",
+    width: "100%",
+    borderWidth: 0.5,
+    borderColor: "lightslategrey",
+  },
+  CampaignValues: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
   },
 });

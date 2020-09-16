@@ -34,7 +34,6 @@ export default function LoginScreen({ navigation }) {
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const formRef = useRef(null);
 
-
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
@@ -67,38 +66,53 @@ export default function LoginScreen({ navigation }) {
           }}
         />
       </View>
-      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='handled'>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
         <Text style={styles.title}>Welcome!</Text>
         <View style={styles.form}>
-          <View style={[styles.emailInput, formEmailError ? {borderWidth:1,borderColor:"red"}: null]}>
+          <View
+            style={[
+              styles.emailInput,
+              formEmailError ? { borderWidth: 1, borderColor: "red" } : null,
+            ]}
+          >
             <Text style={styles.EmailText}>Email</Text>
             <TextInput
               ref={formRef}
               textContentType={"emailAddress"}
-              keyboardType= {"email-address"}
+              keyboardType={"email-address"}
               style={styles.passwordErrorText}
               placeholder="Your email"
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => {
-                setFormEmailError(false)
-                setEmail(val)}}
+                setFormEmailError(false);
+                setEmail(val);
+              }}
             />
             <Text></Text>
           </View>
-          <View style={[styles.passwordInput, formPassError ? {borderWidth:1,borderColor:"red"}: null]}>
+          <View
+            style={[
+              styles.passwordInput,
+              formPassError ? { borderWidth: 1, borderColor: "red" } : null,
+            ]}
+          >
             <Text style={styles.passwordText}>Password</Text>
             <View style={styles.passContent}>
-              <View style={{width:"70%"}}>
+              <View style={{ width: "70%" }}>
                 <TextInput
                   ref={formRef}
-                  style={{ marginTop: 20,}}
+                  style={{ marginTop: 20 }}
                   placeholder="Password"
                   style={styles.textInput}
                   secureTextEntry={hidePass}
-                  onChangeText={(val) => 
-                  { setFormPassError(false)
-                    setPassword(val)}}
+                  onChangeText={(val) => {
+                    setFormPassError(false);
+                    setPassword(val);
+                  }}
                 />
               </View>
               <TouchableOpacity
@@ -143,10 +157,9 @@ export default function LoginScreen({ navigation }) {
               onPress={() => {
                 if (loginForm.email != "" && loginForm.password != "") {
                   signIn(loginForm);
-                }
-                else{
-                  setFormEmailError(true)
-                  setFormPassError(true)
+                } else {
+                  setFormEmailError(true);
+                  setFormPassError(true);
                 }
               }}
             >
@@ -285,16 +298,16 @@ const styles = StyleSheet.create({
 
   passwordErrorText: {
     fontSize: 15,
-    borderColor:"red",
+    borderColor: "red",
     marginTop: 10,
     marginBottom: 10,
     paddingVertical: 5,
   },
-  passContentError:{
+  passContentError: {
     flexDirection: "row",
     justifyContent: "space-between",
-    borderWidth:1,
-    borderColor:"red"
+    borderWidth: 1,
+    borderColor: "red",
   },
   passContent: {
     flexDirection: "row",
